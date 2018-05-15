@@ -40,7 +40,8 @@ public enum ChordQuality {
     MIN9_SHARP5,
     ELEVEN,
     ELEVEN_SHARP5,
-    ELEVEN_FLAT9;
+    ELEVEN_FLAT9,
+    MIN;
 
     private final int[] strongToneOffsets;
     private final int[] weakToneOffsets;
@@ -60,6 +61,26 @@ public enum ChordQuality {
 
     public int[] getWeakToneOffsets() {
         return weakToneOffsets;
+    }
+
+    public static ChordQuality fromString(String s) {
+        if (s == null) return MAJ;
+
+        switch (s) {
+            case "7":
+                return DOM7;
+            case "m7":
+                return MIN7;
+            case "maj7":
+            case "Maj7":
+                return MAJ7;
+            case "m":
+                return MIN;
+            case "dim":
+                return DIM;
+            default:
+                return MAJ;
+        }
     }
 
     private static int[] arr(int... vals) {
