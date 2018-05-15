@@ -1,12 +1,12 @@
 package com.github.improvtrainer.model;
 
 public enum ChordQuality {
-    DOM7,
-    MIN7,
-    MAJ,
-    MAJ7,
-    MAJ6,
-    AUG,
+    DOM7(new int[]{4, 7, 10}, new int[]{}),
+    MIN7(new int[]{3, 7, 10}, new int[]{}),
+    MAJ(new int[]{4, 7}, new int[]{}),
+    MAJ7(new int[]{4, 7, 11}, new int[]{}),
+    MAJ6(new int[]{4, 7, 9}, new int[]{}),
+    AUG(new int[]{4, 8}, new int[]{}),
     DIM,
     MIN6,
     SEVEN_SUS4,
