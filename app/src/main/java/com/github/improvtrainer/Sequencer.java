@@ -1,5 +1,6 @@
 package com.github.improvtrainer;
 
+import com.github.improvtrainer.event.BeatEventListener;
 import com.github.improvtrainer.model.Beat;
 import com.github.improvtrainer.model.BeatType;
 import com.github.improvtrainer.model.Measure;
@@ -8,7 +9,6 @@ import com.github.improvtrainer.model.Song;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.TimerTask;
 
 public class Sequencer {
 
@@ -22,9 +22,9 @@ public class Sequencer {
         this.songIterator = new SongIterator(song);
     }
 
-    class DisplayTask extends TimerTask {
+    class DisplayTask implements BeatEventListener {
         @Override
-        public void run() {
+        public void onBeat() {
             if (songIterator.hasNext()) {
                 Beat nextBeat = songIterator.next();
                 if (nextBeat.getBeatType() == BeatType.CHORD) {
