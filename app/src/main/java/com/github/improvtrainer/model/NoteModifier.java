@@ -1,6 +1,6 @@
 package com.github.improvtrainer.model;
 
-enum NoteModifier {
+public enum NoteModifier {
     NATURAL(0),
     SHARP(1),
     FLAT(-1);
@@ -13,5 +13,16 @@ enum NoteModifier {
 
     public int getToneOffset() {
         return toneOffset;
+    }
+
+    public static NoteModifier fromString(String s) {
+        switch(s) {
+            case "#":
+                return SHARP;
+            case "b":
+                return FLAT;
+            default:
+                return NATURAL;
+        }
     }
 }
