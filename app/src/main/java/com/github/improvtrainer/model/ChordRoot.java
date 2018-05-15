@@ -6,7 +6,7 @@ public class ChordRoot {
     private NoteBase base;
     private NoteModifier modifier;
 
-    ChordRoot(NoteBase base, NoteModifier modifier) {
+    public ChordRoot(NoteBase base, NoteModifier modifier) {
         this.setBase(base);
         this.setModifier(modifier);
     }
