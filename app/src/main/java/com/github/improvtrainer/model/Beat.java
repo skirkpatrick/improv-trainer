@@ -4,14 +4,14 @@ import java.util.Objects;
 
 /**
  * An object representing one beat in a measure, and containing the chord that occurs on this beat.
- * If chord is null, that represents the chord from the previous beat sustaining.
+ * If chord is null, check isClear and isSust
  */
 public class Beat {
+    private BeatType beatType;
     private Chord chord = null;
 
-    public Beat() {}
-
-    public Beat(Chord chord) {
+    public Beat(BeatType beatType, Chord chord) {
+        this.setBeatType(beatType);
         this.setChord(chord);
     }
 
@@ -34,5 +34,13 @@ public class Beat {
     @Override
     public int hashCode() {
         return Objects.hash(chord);
+    }
+
+    public BeatType getBeatType() {
+        return beatType;
+    }
+
+    public void setBeatType(BeatType beatType) {
+        this.beatType = beatType;
     }
 }
