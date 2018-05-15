@@ -40,5 +40,29 @@ public enum ChordQuality {
     MIN9_SHARP5,
     ELEVEN,
     ELEVEN_SHARP5,
-    ELEVEN_FLAT9
+    ELEVEN_FLAT9;
+
+    private final int[] strongToneOffsets;
+    private final int[] weakToneOffsets;
+
+    ChordQuality() {
+        this(new int[]{}, new int[]{});
+    }
+
+    ChordQuality(int[] strong, int[] weak) {
+        this.strongToneOffsets = strong;
+        this.weakToneOffsets = weak;
+    }
+
+    public int[] getStrongToneOffsets() {
+        return strongToneOffsets;
+    }
+
+    public int[] getWeakToneOffsets() {
+        return weakToneOffsets;
+    }
+
+    private static int[] arr(int... vals) {
+        return vals;
+    }
 }
