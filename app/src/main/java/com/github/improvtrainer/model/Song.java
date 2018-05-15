@@ -7,6 +7,8 @@ import java.util.Objects;
 public class Song {
     private List<Measure> measures = new ArrayList<>();
 
+    public Song() {}
+
     public Song(List<Measure> measures) {
         this.setMeasures(measures);
     }
