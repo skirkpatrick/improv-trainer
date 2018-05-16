@@ -41,6 +41,13 @@ public class SongDisplay implements BeatEventListener {
             } else {
                 // this is BeatType.SUSTAINED, which requires no UI updates, so do nothing
             }
+            if (songIterator.hasNext()) {
+                Beat upcomingBeat = songIterator.peek();
+                if (upcomingBeat.getBeatType() == BeatType.CHORD) {
+                    Set<CandidateNote> candidateNotes = candidateNoteService.getCandidates(upcomingBeat.getChord());
+                    updateUpcomingCandidateNotes(candidateNotes);
+                }
+            }
             return true;
         } else {
             return false;
@@ -50,6 +57,12 @@ public class SongDisplay implements BeatEventListener {
     private void updateCandidateNotes(final Set<CandidateNote> candidateNotes) {
         for (CandidateNotesListener listener : candidateNotesListeners) {
             listener.onCandidateNotesChange(candidateNotes);
+        }
+    }
+
+    private void updateUpcomingCandidateNotes(final Set<CandidateNote> candidateNotes) {
+        for (CandidateNotesListener listener : candidateNotesListeners) {
+            listener.onUpcomingCandidateNotesChange(candidateNotes);
         }
     }
 
@@ -87,11 +100,16 @@ public class SongDisplay implements BeatEventListener {
 
         @Override
         public Beat next() {
-            if (!hasNext)
-                throw new NoSuchElementException();
-            Beat beat = next;
+            Beat beat = peek();
             prepNext();
             return beat;
+        }
+
+        public Beat peek() {
+            if (!hasNext) {
+                throw new NoSuchElementException();
+            }
+            return next;
         }
     };
 }

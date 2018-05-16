@@ -49,6 +49,11 @@ public class GuitarView extends View implements CandidateNotesListener {
     }
 
     @Override
+    public void onUpcomingCandidateNotesChange(Set<CandidateNote> candidateNotes) {
+
+    }
+
+    @Override
     public void onDraw(Canvas canvas) {
         float viewWidth = (float)getMeasuredWidth();
         float viewHeight = (float)getMeasuredHeight();

@@ -119,4 +119,9 @@ public class PianoView extends ViewGroup implements CandidateNotesListener {
     public void onCandidateNotesChange(Set<CandidateNote> candidateNotes) {
 
     }
+
+    @Override
+    public void onUpcomingCandidateNotesChange(Set<CandidateNote> candidateNotes) {
+
+    }
 }
