@@ -5,11 +5,12 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.github.improvtrainer.model.guitar.FretboardPosition;
+import com.github.improvtrainer.model.CandidateNote;
+import com.github.improvtrainer.model.CandidateNotesListener;
 
-import java.util.List;
+import java.util.Set;
 
-public class GuitarView extends View implements GuitarModelListener {
+public class GuitarView extends View implements CandidateNotesListener {
     public GuitarView(Context context) {
         super(context);
     }
@@ -26,13 +27,9 @@ public class GuitarView extends View implements GuitarModelListener {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    @Override
-    public void updateFretState(List<FretboardPosition> fretboardPositions, FretboardPosition.State state) {
-
-    }
 
     @Override
-    public void clearAllFrets() {
+    public void onCandidateNotesChange(Set<CandidateNote> candidateNotes) {
 
     }
 }

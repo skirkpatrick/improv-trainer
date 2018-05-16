@@ -12,19 +12,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.improvtrainer.model.Song;
-import com.github.improvtrainer.model.guitar.Guitar;
-import com.github.improvtrainer.model.piano.Piano;
 import com.github.improvtrainer.parser.ChordChartParser;
 import com.github.improvtrainer.ui.GuitarView;
 import com.github.improvtrainer.ui.PianoView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Guitar guitar;
-    private Piano piano;
-
-    private Button buttonGuitar;
-    private Button buttonPiano;
+//    private Button buttonGuitar;
+//    private Button buttonPiano;
     private ImageView buttonRewind;
     private ImageView buttonPlay;
     private ImageView buttonPause;
@@ -36,34 +31,18 @@ public class MainActivity extends AppCompatActivity {
     private Song song;
     private BeatTimer beatTimer;
 
-    private static int GUITAR_STRINGS = 6;
-    private static int GUITAR_FRETS = 22;
-    private static int PIANO_KEYS = 48;
-    private static int PIANO_STARTING_NOTE = 48;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
-        initializeInstruments();
         findViews();
-        subscribeViewsToModels();
         parseChordChart();
         addPlaybackButtonListeners();
-
-        pianoView.setModel(piano);
-    }
-
-    private void initializeInstruments() {
-        guitar = new Guitar(GUITAR_STRINGS, GUITAR_FRETS);
-        piano = new Piano(PIANO_KEYS, PIANO_STARTING_NOTE);
     }
 
     private void findViews() {
-        buttonGuitar = findViewById(R.id.button_guitar);
-        buttonPiano = findViewById(R.id.button_piano);
         buttonRewind = findViewById(R.id.button_rewind);
         buttonPlay = findViewById(R.id.button_play);
         buttonPause = findViewById(R.id.button_pause);
@@ -104,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeTimer(int bpm) {
         Metronome metronome = new Metronome(this);
-        SongDisplay songDisplay = new SongDisplay(song, new CandidateNoteService(), guitar, piano);
+        SongDisplay songDisplay = new SongDisplay(song, new CandidateNoteService(), guitarView, pianoView);
         this.beatTimer = new BeatTimer(bpm, metronome, songDisplay);
     }
 
@@ -135,11 +114,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
         alertDialog.show();
-    }
-
-    private void subscribeViewsToModels() {
-        guitar.setGuitarModelListener(guitarView);
-        piano.setPianoModelListener(pianoView);
     }
 
     private void parseChordChart() {
