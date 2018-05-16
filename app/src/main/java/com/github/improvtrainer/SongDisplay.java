@@ -1,13 +1,16 @@
 package com.github.improvtrainer;
 
 import com.github.improvtrainer.event.BeatEventListener;
+import com.github.improvtrainer.event.ChordChangeEventListener;
 import com.github.improvtrainer.model.Beat;
 import com.github.improvtrainer.model.BeatType;
 import com.github.improvtrainer.model.CandidateNote;
-import com.github.improvtrainer.model.CandidateNotesListener;
+import com.github.improvtrainer.event.CandidateNotesListener;
+import com.github.improvtrainer.model.Chord;
 import com.github.improvtrainer.model.Measure;
 import com.github.improvtrainer.model.Song;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -21,12 +24,22 @@ public class SongDisplay implements BeatEventListener {
     SongIterator songIterator;
     CandidateNoteService candidateNoteService;
     List<CandidateNotesListener> candidateNotesListeners;
+    List<ChordChangeEventListener> chordChangeEventListeners;
 
-    public SongDisplay(Song song, CandidateNoteService candidateNoteService, CandidateNotesListener... candidateNotesListeners) {
+    public SongDisplay(Song song, CandidateNoteService candidateNoteService) {
         this.song = song;
         this.songIterator = new SongIterator(song);
         this.candidateNoteService = candidateNoteService;
-        this.candidateNotesListeners = Arrays.asList(candidateNotesListeners);
+        this.candidateNotesListeners = new ArrayList<>();
+        this.chordChangeEventListeners = new ArrayList<>();
+    }
+
+    public void addCandidateNotesListeners(CandidateNotesListener... candidateNotesListeners) {
+        this.candidateNotesListeners.addAll(Arrays.asList(candidateNotesListeners));
+    }
+
+    public void addChordChangeEventListeners(ChordChangeEventListener... chordChangeEventListeners) {
+        this.chordChangeEventListeners.addAll(Arrays.asList(chordChangeEventListeners));
     }
 
     @Override
@@ -36,8 +49,10 @@ public class SongDisplay implements BeatEventListener {
             if (nextBeat.getBeatType() == BeatType.CHORD) {
                 Set<CandidateNote> candidateNotes = candidateNoteService.getCandidates(nextBeat.getChord());
                 updateCandidateNotes(candidateNotes);
+                updateChord(nextBeat.getChord());
             } else if (nextBeat.getBeatType() == BeatType.CLEAR) {
                 updateCandidateNotes(new HashSet<CandidateNote>());
+                updateChord(null);
             } else {
                 // this is BeatType.SUSTAINED, which requires no UI updates, so do nothing
             }
@@ -63,6 +78,12 @@ public class SongDisplay implements BeatEventListener {
     private void updateUpcomingCandidateNotes(final Set<CandidateNote> candidateNotes) {
         for (CandidateNotesListener listener : candidateNotesListeners) {
             listener.onUpcomingCandidateNotesChange(candidateNotes);
+        }
+    }
+
+    private void updateChord(final Chord chord) {
+        for (ChordChangeEventListener listener : chordChangeEventListeners) {
+            listener.onChordChange(chord);
         }
     }
 
