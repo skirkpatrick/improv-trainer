@@ -127,4 +127,9 @@ public class PianoView extends View implements CandidateNotesListener {
         this.candidateNotes = candidateNotes;
         this.invalidate();
     }
+
+    @Override
+    public void onUpcomingCandidateNotesChange(Set<CandidateNote> candidateNotes) {
+
+    }
 }

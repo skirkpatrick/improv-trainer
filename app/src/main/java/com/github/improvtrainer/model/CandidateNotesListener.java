@@ -6,4 +6,6 @@ public interface CandidateNotesListener {
 
     void onCandidateNotesChange(Set<CandidateNote> candidateNotes);
 
+    void onUpcomingCandidateNotesChange(Set<CandidateNote> candidateNotes);
+
 }
