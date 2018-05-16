@@ -69,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
         buttonPause = findViewById(R.id.button_pause);
         editTempo = findViewById(R.id.tempo_edit);
         chordDisplay = findViewById(R.id.display_chord);
-        pianoView = findViewById(R.id.piano_view);
-        guitarView = findViewById(R.id.guitar_view);
+        pianoView = findViewById(R.id.view_piano);
+        guitarView = findViewById(R.id.view_guitar);
     }
 
     private void addPlaybackButtonListeners() {

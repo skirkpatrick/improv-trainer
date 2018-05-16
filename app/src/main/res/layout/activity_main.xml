@@ -102,7 +102,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
+    <com.github.improvtrainer.ui.PianoView
         android:id="@+id/view_piano"
         android:layout_width="460dp"
         android:layout_height="104dp"
@@ -113,7 +113,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/display_chord" />
 
-    <View
+    <com.github.improvtrainer.ui.GuitarView
         android:id="@+id/view_guitar"
         android:layout_width="460dp"
         android:layout_height="104dp"
@@ -127,28 +127,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_piano"
         app:layout_constraintVertical_bias="0.866" />
-
-    <com.github.improvtrainer.ui.PianoView
-        android:id="@+id/piano_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="36dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/display_chord" />
-
-    <com.github.improvtrainer.ui.GuitarView
-        android:id="@+id/guitar_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="92dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_pause"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>
