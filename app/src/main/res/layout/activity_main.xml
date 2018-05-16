@@ -6,4 +6,78 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/guitar"
+        android:layout_width="78dp"
+        android:layout_height="37dp"
+        android:text="Guitar"
+        tools:layout_editor_absoluteX="58dp"
+        tools:layout_editor_absoluteY="337dp" />
+
+    <Button
+        android:id="@+id/piano"
+        android:layout_width="78dp"
+        android:layout_height="37dp"
+        android:text="Piano"
+        tools:layout_editor_absoluteX="58dp"
+        tools:layout_editor_absoluteY="292dp" />
+
+    <ImageView
+        android:id="@+id/rewind"
+        android:layout_width="35dp"
+        android:layout_height="32dp"
+        app:srcCompat="@android:drawable/ic_media_rew"
+        tools:layout_editor_absoluteX="231dp"
+        tools:layout_editor_absoluteY="329dp" />
+
+    <ImageView
+        android:id="@+id/play"
+        android:layout_width="35dp"
+        android:layout_height="32dp"
+        app:srcCompat="@android:drawable/ic_media_pause"
+        tools:layout_editor_absoluteX="326dp"
+        tools:layout_editor_absoluteY="329dp" />
+
+    <ImageView
+        android:id="@+id/pause"
+        android:layout_width="35dp"
+        android:layout_height="32dp"
+        app:srcCompat="@android:drawable/ic_media_play"
+        tools:layout_editor_absoluteX="280dp"
+        tools:layout_editor_absoluteY="329dp" />
+
+    <TextView
+        android:id="@+id/tempo"
+        android:layout_width="58dp"
+        android:layout_height="31dp"
+        android:text="Tempo"
+        tools:layout_editor_absoluteX="414dp"
+        tools:layout_editor_absoluteY="330dp" />
+
+    <EditText
+        android:id="@+id/enter_tempo"
+        android:layout_width="143dp"
+        android:layout_height="46dp"
+        android:ems="10"
+        android:inputType="number"
+        tools:layout_editor_absoluteX="482dp"
+        tools:layout_editor_absoluteY="324dp" />
+
+    <TextView
+        android:id="@+id/chord"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:text="Chord"
+        tools:layout_editor_absoluteX="221dp"
+        tools:layout_editor_absoluteY="32dp" />
+
+    <EditText
+        android:id="@+id/chordnumber"
+        android:layout_width="121dp"
+        android:layout_height="39dp"
+        android:ems="10"
+        android:inputType="number"
+        tools:layout_editor_absoluteX="280dp"
+        tools:layout_editor_absoluteY="32dp" />
+
 </android.support.constraint.ConstraintLayout>
