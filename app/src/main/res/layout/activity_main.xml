@@ -8,76 +8,100 @@
 
     <Button
         android:id="@+id/guitar"
-        android:layout_width="78dp"
-        android:layout_height="37dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
         android:text="Guitar"
-        tools:layout_editor_absoluteX="58dp"
-        tools:layout_editor_absoluteY="337dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/piano"
-        android:layout_width="78dp"
-        android:layout_height="37dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
         android:text="Piano"
-        tools:layout_editor_absoluteX="58dp"
-        tools:layout_editor_absoluteY="292dp" />
+        app:layout_constraintBottom_toTopOf="@+id/guitar"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/rewind"
-        android:layout_width="35dp"
-        android:layout_height="32dp"
-        app:srcCompat="@android:drawable/ic_media_rew"
-        tools:layout_editor_absoluteX="231dp"
-        tools:layout_editor_absoluteY="329dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/pause"
+        app:srcCompat="@android:drawable/ic_media_rew" />
 
     <ImageView
         android:id="@+id/play"
-        android:layout_width="35dp"
-        android:layout_height="32dp"
-        app:srcCompat="@android:drawable/ic_media_pause"
-        tools:layout_editor_absoluteX="326dp"
-        tools:layout_editor_absoluteY="329dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/pause"
+        app:srcCompat="@android:drawable/ic_media_pause" />
 
     <ImageView
         android:id="@+id/pause"
-        android:layout_width="35dp"
-        android:layout_height="32dp"
-        app:srcCompat="@android:drawable/ic_media_play"
-        tools:layout_editor_absoluteX="280dp"
-        tools:layout_editor_absoluteY="329dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/ic_media_play" />
 
     <TextView
         android:id="@+id/tempo"
-        android:layout_width="58dp"
-        android:layout_height="31dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         android:text="Tempo"
-        tools:layout_editor_absoluteX="414dp"
-        tools:layout_editor_absoluteY="330dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/enter_tempo"
+        app:layout_constraintTop_toTopOf="@+id/enter_tempo" />
 
     <EditText
         android:id="@+id/enter_tempo"
-        android:layout_width="143dp"
-        android:layout_height="46dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="number"
-        tools:layout_editor_absoluteX="482dp"
-        tools:layout_editor_absoluteY="324dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/play"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/play" />
 
     <TextView
         android:id="@+id/chord"
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         android:text="Chord"
-        tools:layout_editor_absoluteX="221dp"
-        tools:layout_editor_absoluteY="32dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/chordnumber"
+        app:layout_constraintEnd_toStartOf="@+id/chordnumber"
+        app:layout_constraintTop_toTopOf="@+id/chordnumber" />
 
     <EditText
         android:id="@+id/chordnumber"
         android:layout_width="121dp"
         android:layout_height="39dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="number"
-        tools:layout_editor_absoluteX="280dp"
-        tools:layout_editor_absoluteY="32dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
