@@ -16,7 +16,7 @@ public class CandidateNoteService {
         ChordRoot root = chord.getRoot();
         ChordQuality quality = chord.getQuality();
         int rootTone = root.getToneValue();
-        candidates.add(new CandidateNote(rootTone, NoteFit.STRONG));
+        candidates.add(new CandidateNote(rootTone, NoteFit.ROOT));
         for (int offset : quality.getStrongToneOffsets()) {
             int actualTone = (rootTone + offset) % 12;
             candidates.add(new CandidateNote(actualTone, NoteFit.STRONG));
