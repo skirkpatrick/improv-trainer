@@ -1,11 +1,14 @@
 package com.github.improvtrainer.model.guitar;
 
+import com.github.improvtrainer.model.CandidateNote;
+import com.github.improvtrainer.model.CandidateNotesListener;
 import com.github.improvtrainer.ui.GuitarModelListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
-public class Guitar {
+public class Guitar implements CandidateNotesListener {
 
     private int numberOfStrings;
     private int numberOfFrets;
@@ -31,5 +34,14 @@ public class Guitar {
 
     public void setGuitarModelListener(GuitarModelListener guitarModelListener) {
         this.guitarModelListener = guitarModelListener;
+    }
+
+    @Override
+    public void onCandidateNotesChange(Set<CandidateNote> candidateNotes) {
+        if (candidateNotes == null || candidateNotes.isEmpty()) {
+            // clear notes
+        } else {
+            // update with new notes
+        }
     }
 }

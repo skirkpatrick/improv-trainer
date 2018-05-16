@@ -1,11 +1,14 @@
 package com.github.improvtrainer.model.piano;
 
+import com.github.improvtrainer.model.CandidateNote;
+import com.github.improvtrainer.model.CandidateNotesListener;
 import com.github.improvtrainer.ui.PianoModelListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
-public class Piano {
+public class Piano implements CandidateNotesListener {
 
     private int numberOfKeys;
     private int startingNote;
@@ -56,5 +59,14 @@ public class Piano {
 
     public void setKeys(List<Key> keys) {
         this.keys = keys;
+    }
+
+    @Override
+    public void onCandidateNotesChange(Set<CandidateNote> candidateNotes) {
+        if (candidateNotes == null || candidateNotes.isEmpty()) {
+            // clear notes
+        } else {
+            // update with new notes
+        }
     }
 }
