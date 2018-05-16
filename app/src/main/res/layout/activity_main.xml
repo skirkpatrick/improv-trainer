@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/guitar"
+        android:id="@+id/button_guitar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -17,37 +17,37 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/piano"
+        android:id="@+id/button_piano"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:text="Piano"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/guitar" />
+        app:layout_constraintStart_toEndOf="@+id/button_guitar" />
 
     <ImageView
-        android:id="@+id/rewind"
+        android:id="@+id/button_rewind"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/pause"
+        app:layout_constraintEnd_toStartOf="@+id/button_pause"
         app:srcCompat="@android:drawable/ic_media_rew" />
 
     <ImageView
-        android:id="@+id/play"
+        android:id="@+id/button_play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/pause"
+        app:layout_constraintStart_toEndOf="@+id/button_pause"
         app:srcCompat="@android:drawable/ic_media_pause" />
 
     <ImageView
-        android:id="@+id/pause"
+        android:id="@+id/button_pause"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -59,7 +59,7 @@
         app:srcCompat="@android:drawable/ic_media_play" />
 
     <TextView
-        android:id="@+id/tempo"
+        android:id="@+id/label_tempo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -67,39 +67,37 @@
         android:layout_marginTop="8dp"
         android:text="Tempo"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/enter_tempo"
-        app:layout_constraintTop_toTopOf="@+id/enter_tempo" />
+        app:layout_constraintEnd_toStartOf="@+id/tempo_edit"
+        app:layout_constraintTop_toTopOf="@+id/tempo_edit" />
 
     <EditText
-        android:id="@+id/enter_tempo"
+        android:id="@+id/tempo_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="@+id/play"
+        app:layout_constraintBottom_toBottomOf="@+id/button_play"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/play" />
+        app:layout_constraintTop_toTopOf="@+id/button_play" />
 
     <TextView
-        android:id="@+id/chord"
+        android:id="@+id/label_chord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         android:text="Chord"
-        app:layout_constraintBottom_toBottomOf="@+id/chordnumber"
-        app:layout_constraintEnd_toStartOf="@+id/chordnumber"
-        app:layout_constraintTop_toTopOf="@+id/chordnumber" />
+        app:layout_constraintBottom_toBottomOf="@+id/display_chord"
+        app:layout_constraintEnd_toStartOf="@+id/display_chord"
+        app:layout_constraintTop_toTopOf="@+id/display_chord" />
 
-    <EditText
-        android:id="@+id/chordnumber"
+    <TextView
+        android:id="@+id/display_chord"
         android:layout_width="121dp"
         android:layout_height="39dp"
         android:layout_marginTop="16dp"
-        android:ems="10"
-        android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -2,6 +2,10 @@ package com.github.improvtrainer;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.github.improvtrainer.model.guitar.Guitar;
 import com.github.improvtrainer.model.piano.Piano;
@@ -10,6 +14,14 @@ public class MainActivity extends AppCompatActivity {
 
     private Guitar guitar;
     private Piano piano;
+
+    private Button buttonGuitar;
+    private Button buttonPiano;
+    private ImageView buttonRewind;
+    private ImageView buttonPlay;
+    private ImageView buttonPause;
+    private EditText editTempo;
+    private TextView chordDisplay;
 
     private static int GUITAR_STRINGS = 6;
     private static int GUITAR_FRETS = 22;
@@ -21,7 +33,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initializeInstruments();
+        findViews();
+    }
+
+    private void initializeInstruments() {
         guitar = new Guitar(GUITAR_STRINGS, GUITAR_FRETS);
         piano = new Piano(PIANO_KEYS, PIANO_STARTING_NOTE);
+    }
+
+    private void findViews() {
+        buttonGuitar = findViewById(R.id.button_guitar);
+        buttonPiano = findViewById(R.id.button_piano);
+        buttonRewind = findViewById(R.id.button_rewind);
+        buttonPlay = findViewById(R.id.button_play);
+        buttonPause = findViewById(R.id.button_pause);
+        editTempo = findViewById(R.id.tempo_edit);
+        chordDisplay = findViewById(R.id.display_chord);
     }
 }
