@@ -7,8 +7,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.improvtrainer.model.Song;
 import com.github.improvtrainer.model.guitar.Guitar;
 import com.github.improvtrainer.model.piano.Piano;
+import com.github.improvtrainer.parser.ChordChartParser;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTempo;
     private TextView chordDisplay;
 
+    private Song song;
+
     private static int GUITAR_STRINGS = 6;
     private static int GUITAR_FRETS = 22;
     private static int PIANO_KEYS = 48;
@@ -35,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         initializeInstruments();
         findViews();
+        parseChordChart();
     }
 
     private void initializeInstruments() {
@@ -50,5 +55,10 @@ public class MainActivity extends AppCompatActivity {
         buttonPause = findViewById(R.id.button_pause);
         editTempo = findViewById(R.id.tempo_edit);
         chordDisplay = findViewById(R.id.display_chord);
+    }
+
+    private void parseChordChart() {
+        ChordChartParser chordChartParser = new ChordChartParser();
+        song = chordChartParser.parse(getApplicationContext().getResources().openRawResource(R.raw.all_of_me));
     }
 }
