@@ -5,7 +5,6 @@ import com.github.improvtrainer.model.Beat;
 import com.github.improvtrainer.model.BeatType;
 import com.github.improvtrainer.model.CandidateNote;
 import com.github.improvtrainer.model.Measure;
-import com.github.improvtrainer.model.SequencerConfiguration;
 import com.github.improvtrainer.model.Song;
 
 import java.util.Iterator;
@@ -16,12 +15,10 @@ public class SongDisplay implements BeatEventListener {
 
     Song song;
     SongIterator songIterator;
-    SequencerConfiguration configuration;
     CandidateNoteService candidateNoteService;
 
-    public SongDisplay(Song song, SequencerConfiguration configuration, CandidateNoteService candidateNoteService) {
+    public SongDisplay(Song song, CandidateNoteService candidateNoteService) {
         this.song = song;
-        this.configuration = configuration;
         this.songIterator = new SongIterator(song);
         this.candidateNoteService = candidateNoteService;
     }
