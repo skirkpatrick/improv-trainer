@@ -2,6 +2,7 @@ package com.github.improvtrainer;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.util.Log;
 
 import com.github.improvtrainer.event.BeatEventListener;
 
@@ -12,11 +13,12 @@ public class Metronome implements BeatEventListener {
 
     public Metronome(Context context) {
         this.context = context;
-        this.mediaPlayer = MediaPlayer.create(context, R.raw.click);
+        this.mediaPlayer = MediaPlayer.create(context, R.raw.click_wav);
     }
 
     @Override
     public void onBeat() {
+        mediaPlayer.seekTo(0);
         mediaPlayer.start();
     }
 }
