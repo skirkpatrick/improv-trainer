@@ -27,14 +27,14 @@
         <!--app:layout_constraintStart_toEndOf="@+id/button_guitar" />-->
 
     <ImageView
-        android:id="@+id/button_rewind"
+        android:id="@+id/button_stop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_pause"
-        app:srcCompat="@android:drawable/ic_media_rew" />
+        app:srcCompat="@drawable/ic_baseline_stop_24px" />
 
     <ImageView
         android:id="@+id/button_play"

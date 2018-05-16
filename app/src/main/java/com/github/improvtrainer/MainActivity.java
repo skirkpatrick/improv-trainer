@@ -6,7 +6,6 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
 //    private Button buttonGuitar;
 //    private Button buttonPiano;
-    private ImageView buttonRewind;
+    private ImageView buttonStop;
     private ImageView buttonPlay;
     private ImageView buttonPause;
     private EditText editTempo;
@@ -43,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void findViews() {
-        buttonRewind = findViewById(R.id.button_rewind);
+        buttonStop = findViewById(R.id.button_stop);
         buttonPlay = findViewById(R.id.button_play);
         buttonPause = findViewById(R.id.button_pause);
         editTempo = findViewById(R.id.tempo_edit);
@@ -79,6 +78,13 @@ public class MainActivity extends AppCompatActivity {
                 pauseTimer();
             }
         });
+
+        buttonStop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                stopTimer();
+            }
+        });
     }
 
     private void initializeTimer(int bpm) {
@@ -100,6 +106,13 @@ public class MainActivity extends AppCompatActivity {
     private void pauseTimer() {
         if (beatTimer != null) {
             beatTimer.pause();
+        }
+    }
+
+    private void stopTimer() {
+        if (beatTimer != null) {
+            beatTimer.stop();
+            beatTimer = null; // reset beat timer so that next time around we'll create a new one with a different tempo
         }
     }
 
