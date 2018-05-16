@@ -2,6 +2,7 @@ package com.github.improvtrainer;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -62,6 +63,22 @@ public class MainActivity extends AppCompatActivity {
         chordDisplay = findViewById(R.id.display_chord);
         pianoView = findViewById(R.id.piano_view);
         guitarView = findViewById(R.id.guitar_view);
+    }
+
+    private void addTimerViewsListeners(final BeatTimer timer) {
+        buttonPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                timer.start();
+            }
+        });
+
+        buttonPause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                timer.pause();
+            }
+        });
     }
 
     private void subscribeViewsToModels() {
