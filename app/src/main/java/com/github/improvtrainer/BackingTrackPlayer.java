@@ -24,6 +24,11 @@ public class BackingTrackPlayer {
     }
 
     public void stop() {
-        mediaPlayer.stop();
+        pause();
+        mediaPlayer.seekTo(0);
+    }
+
+    public int currentPosition() {
+        return mediaPlayer.getCurrentPosition();
     }
 }
