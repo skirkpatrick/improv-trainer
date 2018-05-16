@@ -7,8 +7,19 @@ public class Key {
     private int note;
     private State state;
 
-    public Key(int note) {
+    Key(int note) {
         this.note = note;
     }
 
+    public int getNote() {
+        return note;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
 }

@@ -5,8 +5,21 @@ public class Fret {
     enum State { OFF, ON, ROOT }
 
     private int note;
+    private State state;
 
-    public Fret(int note) {
+    Fret(int note) {
         this.note = note;
+    }
+
+    public int getNote() {
+        return note;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 }

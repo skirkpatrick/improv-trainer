@@ -1,6 +1,5 @@
 package com.github.improvtrainer;
 
-import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -21,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         guitar = new Guitar(GUITAR_STRINGS, GUITAR_FRETS);
         piano = new Piano(PIANO_KEYS, PIANO_STARTING_NOTE);

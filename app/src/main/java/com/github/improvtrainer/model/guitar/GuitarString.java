@@ -1,24 +1,25 @@
 package com.github.improvtrainer.model.guitar;
 
-import java.util.TreeMap;
+import java.util.ArrayList;
+import java.util.List;
 
-public class GuitarString {
+class GuitarString {
 
-    private TreeMap<Integer, Fret> fretMap;
+    private List<Fret> frets;
 
     private int startingNote;
     private int numberOfFrets;
 
-    public GuitarString(int startingNote, int numberOfFrets) {
+    GuitarString(int startingNote, int numberOfFrets) {
         this.startingNote = startingNote;
         this.numberOfFrets = numberOfFrets;
         initGuitarString();
     }
 
     private void initGuitarString() {
-        fretMap = new TreeMap<>();
+        frets = new ArrayList<>();
         for (int i = 0; i <= numberOfFrets; i ++) {
-            fretMap.put(i, new Fret(startingNote + i));
+            frets.add(new Fret(startingNote + i));
         }
     }
 }

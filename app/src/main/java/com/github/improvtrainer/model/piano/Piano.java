@@ -1,13 +1,14 @@
 package com.github.improvtrainer.model.piano;
 
-import java.util.TreeMap;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Piano {
 
     private int numberOfKeys;
     private int startingNote;
 
-    private TreeMap<Integer, Key> keymap;
+    private List<Key> keys;
 
     public Piano(int numberOfKeys, int startingNote) {
         this.numberOfKeys = numberOfKeys;
@@ -16,9 +17,9 @@ public class Piano {
     }
 
     private void initPiano() {
-        keymap = new TreeMap<>();
+        keys = new ArrayList<>();
         for (int i = 0; i < numberOfKeys; i++) {
-            keymap.put(i, new Key(i + startingNote));
+            keys.add(new Key(i + startingNote));
         }
     }
 }
