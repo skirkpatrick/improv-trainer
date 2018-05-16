@@ -12,6 +12,14 @@ public class CandidateNote {
         this.fit = fit;
     }
 
+    public int getBaseToneValue() {
+        return baseToneValue;
+    }
+
+    public NoteFit getFit() {
+        return fit;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
