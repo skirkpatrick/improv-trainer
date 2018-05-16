@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         findViews();
         subscribeViewsToModels();
         parseChordChart();
+
+        pianoView.setModel(piano);
     }
 
     private void initializeInstruments() {

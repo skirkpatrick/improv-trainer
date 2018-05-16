@@ -29,4 +29,32 @@ public class Piano {
     public void setPianoModelListener(PianoModelListener pianoModelListener) {
         this.pianoModelListener = pianoModelListener;
     }
+
+    public int getNumberOfKeys() {
+        return numberOfKeys;
+    }
+
+    public void setNumberOfKeys(int numberOfKeys) {
+        this.numberOfKeys = numberOfKeys;
+    }
+
+    public int getStartingNote() {
+        return startingNote;
+    }
+
+    public void setStartingNote(int startingNote) {
+        this.startingNote = startingNote;
+    }
+
+    public PianoModelListener getPianoModelListener() {
+        return pianoModelListener;
+    }
+
+    public List<Key> getKeys() {
+        return keys;
+    }
+
+    public void setKeys(List<Key> keys) {
+        this.keys = keys;
+    }
 }

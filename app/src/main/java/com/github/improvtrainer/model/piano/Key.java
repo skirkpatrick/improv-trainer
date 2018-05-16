@@ -3,13 +3,13 @@ package com.github.improvtrainer.model.piano;
 public class Key {
 
     public enum State { OFF, ON, ROOT }
-    enum KeyColor { BLACK, WHITE }
+    public enum KeyColor { BLACK, WHITE }
 
     private int note;
     private State state;
     private KeyColor keyColor;
 
-    Key(int note) {
+    public Key(int note) {
         this.note = note;
         this.state = State.OFF;
         this.keyColor = getKeyColorFromNote(note);
@@ -38,5 +38,9 @@ public class Key {
 
     public void setState(State state) {
         this.state = state;
+    }
+
+    public KeyColor getKeyColor() {
+        return keyColor;
     }
 }
