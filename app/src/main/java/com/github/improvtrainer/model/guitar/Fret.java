@@ -9,6 +9,7 @@ public class Fret {
 
     Fret(int note) {
         this.note = note;
+        this.state = State.OFF;
     }
 
     public int getNote() {

@@ -23,8 +23,8 @@
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:text="Piano"
-        app:layout_constraintBottom_toTopOf="@+id/guitar"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/guitar" />
 
     <ImageView
         android:id="@+id/rewind"
