@@ -17,8 +17,8 @@ public class Metronome implements BeatEventListener {
     }
 
     @Override
-    public void onBeat() {
+    public boolean onBeat() {
         mediaPlayer.seekTo(0);
-        mediaPlayer.start();
+        return true;
     }
 }

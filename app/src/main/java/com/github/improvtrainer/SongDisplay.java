@@ -3,42 +3,44 @@ package com.github.improvtrainer;
 import com.github.improvtrainer.event.BeatEventListener;
 import com.github.improvtrainer.model.Beat;
 import com.github.improvtrainer.model.BeatType;
+import com.github.improvtrainer.model.CandidateNote;
 import com.github.improvtrainer.model.Measure;
 import com.github.improvtrainer.model.SequencerConfiguration;
 import com.github.improvtrainer.model.Song;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
-public class Sequencer {
+public class SongDisplay implements BeatEventListener {
 
     Song song;
     SongIterator songIterator;
     SequencerConfiguration configuration;
+    CandidateNoteService candidateNoteService;
 
-    public Sequencer(Song song, SequencerConfiguration configuration) {
+    public SongDisplay(Song song, SequencerConfiguration configuration, CandidateNoteService candidateNoteService) {
         this.song = song;
         this.configuration = configuration;
         this.songIterator = new SongIterator(song);
+        this.candidateNoteService = candidateNoteService;
     }
 
-    class DisplayTask implements BeatEventListener {
-        @Override
-        public void onBeat() {
-            if (songIterator.hasNext()) {
-                Beat nextBeat = songIterator.next();
-                if (nextBeat.getBeatType() == BeatType.CHORD) {
-                    // TODO call candidate note service to get candidate notes
-                    // TODO fire off event to update UI with chord
-                } else if (nextBeat.getBeatType() == BeatType.CLEAR) {
-                    // TODO fire off event to update UI with no chord
-                } else {
-                    // this is BeatType.SUSTAINED, which requires no UI updates, so do nothing
-                }
+    @Override
+    public boolean onBeat() {
+        if (songIterator.hasNext()) {
+            Beat nextBeat = songIterator.next();
+            if (nextBeat.getBeatType() == BeatType.CHORD) {
+                Set<CandidateNote> candidateNotes = candidateNoteService.getCandidates(nextBeat.getChord());
+                // TODO fire off event to update UI with chord
+            } else if (nextBeat.getBeatType() == BeatType.CLEAR) {
+                // TODO fire off event to update UI with no chord
             } else {
-                // TODO this should end the timer
-                return;
+                // this is BeatType.SUSTAINED, which requires no UI updates, so do nothing
             }
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -52,6 +54,7 @@ public class Sequencer {
         public SongIterator(Song song) {
             this.song = song;
             this.measureIterator = song.getMeasures().iterator();
+            prepNext();
         }
 
         private void prepNext() {

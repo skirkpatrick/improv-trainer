@@ -36,8 +36,14 @@ public class BeatTimer {
         public void run() {
             // submit first to avoid timer drift
             handler.postDelayed(this, handlerDelay);
+            boolean shouldStop = false;
             for (BeatEventListener listener : listeners) {
-                listener.onBeat();
+                shouldStop = shouldStop || !listener.onBeat();
+            }
+            // if any beat event listener returns that the timer should stop, then finish going
+            // through all listeners then stop
+            if (shouldStop) {
+                stop();
             }
         }
     }
