@@ -2,7 +2,7 @@ package com.github.improvtrainer.model.piano;
 
 public class Key {
 
-    enum State { OFF, ON, ROOT }
+    public enum State { OFF, ON, ROOT }
     enum KeyColor { BLACK, WHITE }
 
     private int note;

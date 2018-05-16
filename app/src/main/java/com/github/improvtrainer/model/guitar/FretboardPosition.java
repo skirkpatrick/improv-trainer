@@ -1,14 +1,18 @@
 package com.github.improvtrainer.model.guitar;
 
-public class Fret {
+public class FretboardPosition {
 
-    enum State { OFF, ON, ROOT }
+    public enum State { OFF, ON, ROOT }
 
     private int note;
+    private GuitarString guitarString;
+    private int fret;
     private State state;
 
-    Fret(int note) {
+    FretboardPosition(int note, GuitarString guitarString, int fret) {
         this.note = note;
+        this.guitarString = guitarString;
+        this.fret = fret;
         this.state = State.OFF;
     }
 

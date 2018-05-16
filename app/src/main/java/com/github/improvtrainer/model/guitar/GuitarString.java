@@ -5,21 +5,23 @@ import java.util.List;
 
 class GuitarString {
 
-    private List<Fret> frets;
+    private List<FretboardPosition> fretboardPositions;
 
     private int startingNote;
     private int numberOfFrets;
+    private int index;
 
-    GuitarString(int startingNote, int numberOfFrets) {
+    GuitarString(int startingNote, int numberOfFrets, int index) {
         this.startingNote = startingNote;
         this.numberOfFrets = numberOfFrets;
+        this.index = index;
         initGuitarString();
     }
 
     private void initGuitarString() {
-        frets = new ArrayList<>();
+        fretboardPositions = new ArrayList<>();
         for (int i = 0; i <= numberOfFrets; i ++) {
-            frets.add(new Fret(startingNote + i));
+            fretboardPositions.add(new FretboardPosition(startingNote + i, this, i));
         }
     }
 }

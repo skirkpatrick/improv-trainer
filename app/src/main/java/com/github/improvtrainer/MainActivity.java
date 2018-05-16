@@ -11,6 +11,8 @@ import com.github.improvtrainer.model.Song;
 import com.github.improvtrainer.model.guitar.Guitar;
 import com.github.improvtrainer.model.piano.Piano;
 import com.github.improvtrainer.parser.ChordChartParser;
+import com.github.improvtrainer.ui.GuitarView;
+import com.github.improvtrainer.ui.PianoView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageView buttonPause;
     private EditText editTempo;
     private TextView chordDisplay;
+    private PianoView pianoView;
+    private GuitarView guitarView;
 
     private Song song;
 
@@ -39,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         initializeInstruments();
         findViews();
+        subscribeViewsToModels();
         parseChordChart();
     }
 
@@ -55,6 +60,13 @@ public class MainActivity extends AppCompatActivity {
         buttonPause = findViewById(R.id.button_pause);
         editTempo = findViewById(R.id.tempo_edit);
         chordDisplay = findViewById(R.id.display_chord);
+        pianoView = findViewById(R.id.piano_view);
+        guitarView = findViewById(R.id.guitar_view);
+    }
+
+    private void subscribeViewsToModels() {
+        guitar.setGuitarModelListener(guitarView);
+        piano.setPianoModelListener(pianoView);
     }
 
     private void parseChordChart() {
