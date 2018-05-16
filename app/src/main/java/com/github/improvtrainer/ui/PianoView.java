@@ -6,17 +6,26 @@ import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.github.improvtrainer.model.CandidateNote;
 import com.github.improvtrainer.model.CandidateNotesListener;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
-public class PianoView extends ViewGroup implements CandidateNotesListener {
+public class PianoView extends View implements CandidateNotesListener {
+    private static final int NUMBER_OF_KEYS = 48;
+    private static final int WHITE_KEYS_PER_OCTAVE = 7;
+    private static final int KEYS_PER_OCTAVE = 12;
     private static final float BLACK_KEY_WIDTH_SCALING_FACTOR = 0.5f;
     private static final float BLACK_KEY_SCALING_FACTOR = 0.6f;
     private static final Paint WHITE_PAINT = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private static final Paint BLACK_PAINT = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private static final Paint BORDER_PAINT = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private static final Set<Integer> BLACK_KEY_OFFSETS = new HashSet<>(Arrays.asList(1, 3, 6, 8, 10));
+
+    private Set<CandidateNote> candidateNotes;
 
     public PianoView(Context context) {
         super(context);
@@ -35,88 +44,87 @@ public class PianoView extends ViewGroup implements CandidateNotesListener {
     }
 
     @Override
-    protected void onLayout(boolean b, int i, int i1, int i2, int i3) {
-
-    }
-
-    @Override
     protected void onDraw(Canvas canvas) {
         init();
-        drawBorder();
-
-//        if (pianoModel != null) {
-//            layoutKeys(canvas);
-//        }
-
-        canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), WHITE_PAINT);
-        View v = new KeyView(this.getContext());
-        this.addView(v);
+        layoutKeys(canvas);
     }
 
     private void init() {
         WHITE_PAINT.setColor(0xFFFFFF);
         WHITE_PAINT.setAlpha(255);
-    }
 
-    private void drawBorder() {
+        BLACK_PAINT.setColor(0x000000);
+        BLACK_PAINT.setAlpha(255);
 
+        BORDER_PAINT.setColor(0x999999);
+        BORDER_PAINT.setAlpha(255);
+        BORDER_PAINT.setStyle(Paint.Style.STROKE);
     }
 
     private void layoutKeys(Canvas canvas) {
-//        for (int i = 0; i < 48; i++) {
-//            keys.add(new Key(i));
-//        }
-//
+
 //        keys = pianoModel.getKeys();
 //        int noteNumber = pianoModel.getStartingNote();
 //
-//        float currentXStart = 0;
-//        final float whiteKeyWidth = canvas.getWidth() / countWhiteKeys(keys);
-//        final float blackKeyWidth = BLACK_KEY_WIDTH_SCALING_FACTOR * whiteKeyWidth;
-//        final float keyTop = 0;
-//        final float whiteKeyBottom = canvas.getHeight();
-//        final float blackKeyBottom = canvas.getHeight() * BLACK_KEY_SCALING_FACTOR;
-//
-//        float xStart;
-//        float xEnd;
-//        float yStart;
-//        float yEnd;
-//
-//        for (Key key : keys) {
-//            int note = key.getNote();
-//            if (key.getKeyColor() == Key.KeyColor.WHITE) {
-//                xStart = currentXStart;
-//                xEnd = currentXStart + whiteKeyWidth;
-//                yStart = keyTop;
-//                yEnd = whiteKeyBottom;
-//                currentXStart++; //Increment starting position for next key because this key is white
-//            } else if (key.getKeyColor() == Key.KeyColor.BLACK) {
-//                xStart = currentXStart + whiteKeyWidth - blackKeyWidth/2;
-//                xEnd = currentXStart + whiteKeyWidth + blackKeyWidth/2;
-//                yStart = keyTop;
-//                yEnd = blackKeyBottom;
-//                //Don't increment starting position for next key because this key is black
-//            }
-//
-//            //draw key and store reference to it
-//
-//        }
+        float currentXStart = 0;
+        final float whiteKeyWidth = canvas.getWidth() / countWhiteKeys(NUMBER_OF_KEYS);
+        final float blackKeyWidth = BLACK_KEY_WIDTH_SCALING_FACTOR * whiteKeyWidth;
+        final float keyTop = 0;
+        final float whiteKeyBottom = canvas.getHeight();
+        final float blackKeyBottom = canvas.getHeight() * BLACK_KEY_SCALING_FACTOR;
+
+        float xStart;
+        float xEnd;
+        float yStart;
+        float yEnd;
+
+        Paint currentColor;
+
+        for (int i = 0; i < NUMBER_OF_KEYS; i++) {
+            if (!BLACK_KEY_OFFSETS.contains(i % 12)){
+                // white keys
+                xStart = currentXStart;
+                xEnd = currentXStart + whiteKeyWidth;
+                yStart = keyTop;
+                yEnd = whiteKeyBottom;
+                currentXStart+= whiteKeyWidth; //Increment starting position for next key because this key is white
+                currentColor = WHITE_PAINT;
+
+                //draw key and store reference to it
+                canvas.drawRect(xStart, yStart, xEnd, yEnd, currentColor);
+                canvas.drawRect(xStart, yStart, xEnd, yEnd, BORDER_PAINT);
+            }
+
+        }
+
+        currentXStart = 0;
+
+        for (int i = 0; i < NUMBER_OF_KEYS; i++) {
+            if (BLACK_KEY_OFFSETS.contains(i % 12)) {
+                // black keys
+                xStart = currentXStart - blackKeyWidth / 2;
+                xEnd = currentXStart + blackKeyWidth / 2;
+                yStart = keyTop;
+                yEnd = blackKeyBottom;
+                currentColor = BLACK_PAINT;
+                //Don't increment starting position for next key because this key is black
+
+                //draw key and store reference to it
+                canvas.drawRect(xStart, yStart, xEnd, yEnd, currentColor);
+                canvas.drawRect(xStart, yStart, xEnd, yEnd, BORDER_PAINT);
+            } else {
+                currentXStart+= whiteKeyWidth;
+            }
+        }
     }
 
-//    private int countWhiteKeys(Collection<Key> keys) {
-//        int count = 0;
-//
-//        for (Key key : keys) {
-//            if (key.getKeyColor() == Key.KeyColor.WHITE) {
-//                count++;
-//            }
-//        }
-//
-//        return count;
-//    }
+    private int countWhiteKeys(int numberOfKeys) {
+        return numberOfKeys * WHITE_KEYS_PER_OCTAVE / KEYS_PER_OCTAVE;
+    }
 
     @Override
     public void onCandidateNotesChange(Set<CandidateNote> candidateNotes) {
-
+        this.candidateNotes = candidateNotes;
+        this.invalidate();
     }
 }
