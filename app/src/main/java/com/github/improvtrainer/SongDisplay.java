@@ -4,10 +4,14 @@ import com.github.improvtrainer.event.BeatEventListener;
 import com.github.improvtrainer.model.Beat;
 import com.github.improvtrainer.model.BeatType;
 import com.github.improvtrainer.model.CandidateNote;
+import com.github.improvtrainer.model.CandidateNotesListener;
 import com.github.improvtrainer.model.Measure;
 import com.github.improvtrainer.model.Song;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
@@ -16,11 +20,13 @@ public class SongDisplay implements BeatEventListener {
     Song song;
     SongIterator songIterator;
     CandidateNoteService candidateNoteService;
+    List<CandidateNotesListener> candidateNotesListeners;
 
-    public SongDisplay(Song song, CandidateNoteService candidateNoteService) {
+    public SongDisplay(Song song, CandidateNoteService candidateNoteService, CandidateNotesListener... candidateNotesListeners) {
         this.song = song;
         this.songIterator = new SongIterator(song);
         this.candidateNoteService = candidateNoteService;
+        this.candidateNotesListeners = Arrays.asList(candidateNotesListeners);
     }
 
     @Override
@@ -29,15 +35,21 @@ public class SongDisplay implements BeatEventListener {
             Beat nextBeat = songIterator.next();
             if (nextBeat.getBeatType() == BeatType.CHORD) {
                 Set<CandidateNote> candidateNotes = candidateNoteService.getCandidates(nextBeat.getChord());
-                // TODO fire off event to update UI with chord
+                updateCandidateNotes(candidateNotes);
             } else if (nextBeat.getBeatType() == BeatType.CLEAR) {
-                // TODO fire off event to update UI with no chord
+                updateCandidateNotes(new HashSet<CandidateNote>());
             } else {
                 // this is BeatType.SUSTAINED, which requires no UI updates, so do nothing
             }
             return true;
         } else {
             return false;
+        }
+    }
+
+    private void updateCandidateNotes(final Set<CandidateNote> candidateNotes) {
+        for (CandidateNotesListener listener : candidateNotesListeners) {
+            listener.onCandidateNotesChange(candidateNotes);
         }
     }
 

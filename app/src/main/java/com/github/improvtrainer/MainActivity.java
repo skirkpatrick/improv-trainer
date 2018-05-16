@@ -81,15 +81,16 @@ public class MainActivity extends AppCompatActivity {
                     String tempoString = editTempo.getText().toString();
                     if (tempoString == null || tempoString.isEmpty()) {
                         alert("Must specify tempo", "Please specify a tempo in bpm");
+                        return;
                     } else if (song == null) {
                         alert("Must input song", "Please input a song");
+                        return;
                     } else {
                         Integer tempo = Integer.valueOf(tempoString);
                         initializeTimer(tempo);
-                        startTimer();
                     }
                 }
-                // TODO if timer is currently paused or ended, start it again, otherwise do nothing
+                startTimer();
             }
         });
 
@@ -103,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeTimer(int bpm) {
         Metronome metronome = new Metronome(this);
-        SongDisplay songDisplay = new SongDisplay(song, new CandidateNoteService());
+        SongDisplay songDisplay = new SongDisplay(song, new CandidateNoteService(), guitar, piano);
         this.beatTimer = new BeatTimer(bpm, metronome, songDisplay);
     }
 
