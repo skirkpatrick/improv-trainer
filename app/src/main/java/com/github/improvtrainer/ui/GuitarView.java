@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.github.improvtrainer.model.CandidateNote;
 import com.github.improvtrainer.model.CandidateNotesListener;
+import com.github.improvtrainer.model.NoteFit;
 
 import java.util.Set;
 
@@ -21,6 +22,7 @@ public class GuitarView extends View implements CandidateNotesListener {
     private final int STRING_COLOR = Color.DKGRAY;
     private final int ROOT_COLOR = Color.RED;
     private final int STRONG_COLOR = Color.MAGENTA;
+    private NoteFit[][] notes;
 
     public GuitarView(Context context) {
         super(context);
@@ -41,7 +43,9 @@ public class GuitarView extends View implements CandidateNotesListener {
 
     @Override
     public void onCandidateNotesChange(Set<CandidateNote> candidateNotes) {
-
+        notes = new NoteFit[23][6];
+        // TODO map candidateNotes to NoteFit[][] notes
+        invalidate();
     }
 
     @Override
@@ -52,6 +56,7 @@ public class GuitarView extends View implements CandidateNotesListener {
         float fretHeight = viewHeight / 7f;
 
         drawStaticImage(viewWidth, viewHeight, fretWidth, fretHeight, canvas);
+        drawNotes(viewWidth, viewHeight, fretWidth, fretHeight, canvas);
     }
 
     private void drawStaticImage(float viewWidth, float viewHeight, float fretWidth, float fretHeight, Canvas canvas) {
@@ -59,7 +64,7 @@ public class GuitarView extends View implements CandidateNotesListener {
         drawFretboard(viewWidth, viewHeight, fretWidth, fretHeight, canvas);
         drawFrets(viewHeight, fretWidth, fretHeight, canvas);
         drawStrings(viewWidth, viewHeight, fretWidth, fretHeight, canvas);
-        drawFretMarkers(viewWidth, viewHeight, fretWidth, fretHeight, canvas);
+        drawFretMarkers(viewHeight, fretWidth, fretHeight, canvas);
     }
 
     private void drawBackground(float viewWidth, float viewHeight, Canvas canvas) {
@@ -95,7 +100,7 @@ public class GuitarView extends View implements CandidateNotesListener {
         }
     }
 
-    private void drawFretMarkers(float viewWidth, float viewHeight, float fretWidth, float fretHeight, Canvas canvas) {
+    private void drawFretMarkers(float viewHeight, float fretWidth, float fretHeight, Canvas canvas) {
         Paint fretPaint = new Paint();
         fretPaint.setColor(STRING_COLOR);
 
@@ -106,12 +111,16 @@ public class GuitarView extends View implements CandidateNotesListener {
         canvas.drawCircle(fretWidth * 10.5f, viewHeight / 2, 8, fretPaint);
 
         // Fret 12
-        canvas.drawCircle(fretWidth * 13.5f, fretHeight + (fretHeight * 5 / 4), 8, fretPaint);
-        canvas.drawCircle(fretWidth * 13.5f, fretHeight + (fretHeight * 15 / 4), 8, fretPaint);
+        canvas.drawCircle(fretWidth * 13.5f, fretHeight * 2.5f, 8, fretPaint);
+        canvas.drawCircle(fretWidth * 13.5f, fretHeight * 4.5f, 8, fretPaint);
 
         // Fret 15, 17, 19
         canvas.drawCircle(fretWidth * 16.5f, viewHeight / 2, 8, fretPaint);
         canvas.drawCircle(fretWidth * 18.5f, viewHeight / 2, 8, fretPaint);
         canvas.drawCircle(fretWidth * 20.5f, viewHeight / 2, 8, fretPaint);
+    }
+
+    private void drawNotes(float viewWidth, float viewHeight, float fretWidth, float fretHeight, Canvas canvas) {
+        // TODO iterate NoteFit[][] notes and draw circles in the right color
     }
 }
