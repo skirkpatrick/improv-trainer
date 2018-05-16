@@ -27,6 +27,10 @@ public class BeatTimer {
         handler.postDelayed(runner, handlerDelay);
     }
 
+    public void pause() {
+        // TODO need to manage timing for pausing in the middle of a beat
+    }
+
     public void stop() {
         handler.removeCallbacks(runner);
     }
