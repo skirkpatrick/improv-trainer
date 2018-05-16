@@ -21,12 +21,12 @@ public class Guitar {
 
     private void initGuitar() {
         guitarStrings = new ArrayList<>();
-        guitarStrings.add(new GuitarString(52, numberOfFrets));
-        guitarStrings.add(new GuitarString(57, numberOfFrets));
-        guitarStrings.add(new GuitarString(62, numberOfFrets));
-        guitarStrings.add(new GuitarString(67, numberOfFrets));
-        guitarStrings.add(new GuitarString(71, numberOfFrets));
-        guitarStrings.add(new GuitarString(76, numberOfFrets));
+        guitarStrings.add(new GuitarString(52, numberOfFrets, 0));
+        guitarStrings.add(new GuitarString(57, numberOfFrets, 1));
+        guitarStrings.add(new GuitarString(62, numberOfFrets, 2));
+        guitarStrings.add(new GuitarString(67, numberOfFrets, 3));
+        guitarStrings.add(new GuitarString(71, numberOfFrets, 4));
+        guitarStrings.add(new GuitarString(76, numberOfFrets, 5));
     }
 
     public void setGuitarModelListener(GuitarModelListener guitarModelListener) {
