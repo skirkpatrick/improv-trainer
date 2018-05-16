@@ -20,12 +20,14 @@ public class PianoView extends View implements CandidateNotesListener {
     private static final int KEYS_PER_OCTAVE = 12;
     private static final float BLACK_KEY_WIDTH_SCALING_FACTOR = 0.5f;
     private static final float BLACK_KEY_SCALING_FACTOR = 0.6f;
-    private static final Paint WHITE_PAINT = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private static final Paint BLACK_PAINT = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private static final Paint WHITE_KEY_PAINT = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private static final Paint BLACK_KEY_PAINT = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private static final Paint WHITE_KEY_HIGHLIGHT_PAINT = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private static final Paint BLACK_KEY_HIGHLIGHT_PAINT = new Paint(Paint.ANTI_ALIAS_FLAG);
     private static final Paint BORDER_PAINT = new Paint(Paint.ANTI_ALIAS_FLAG);
     private static final Set<Integer> BLACK_KEY_OFFSETS = new HashSet<>(Arrays.asList(1, 3, 6, 8, 10));
 
-    private Set<CandidateNote> candidateNotes;
+    private Set<CandidateNote> candidateNotes = new HashSet<>();
 
     public PianoView(Context context) {
         super(context);
@@ -50,11 +52,17 @@ public class PianoView extends View implements CandidateNotesListener {
     }
 
     private void init() {
-        WHITE_PAINT.setColor(0xFFFFFF);
-        WHITE_PAINT.setAlpha(255);
+        WHITE_KEY_PAINT.setColor(0xFFFFFF);
+        WHITE_KEY_PAINT.setAlpha(255);
 
-        BLACK_PAINT.setColor(0x000000);
-        BLACK_PAINT.setAlpha(255);
+        WHITE_KEY_HIGHLIGHT_PAINT.setColor(0x00FF00); // todo change this
+        WHITE_KEY_HIGHLIGHT_PAINT.setAlpha(255);
+
+        BLACK_KEY_PAINT.setColor(0x000000);
+        BLACK_KEY_PAINT.setAlpha(255);
+
+        BLACK_KEY_HIGHLIGHT_PAINT.setColor(0x00FF00); // todo change this
+        BLACK_KEY_HIGHLIGHT_PAINT.setAlpha(255);
 
         BORDER_PAINT.setColor(0x999999);
         BORDER_PAINT.setAlpha(255);
@@ -88,7 +96,7 @@ public class PianoView extends View implements CandidateNotesListener {
                 yStart = keyTop;
                 yEnd = whiteKeyBottom;
                 currentXStart+= whiteKeyWidth; //Increment starting position for next key because this key is white
-                currentColor = WHITE_PAINT;
+                currentColor = WHITE_KEY_PAINT;
 
                 //draw key and store reference to it
                 canvas.drawRect(xStart, yStart, xEnd, yEnd, currentColor);
@@ -106,7 +114,7 @@ public class PianoView extends View implements CandidateNotesListener {
                 xEnd = currentXStart + blackKeyWidth / 2;
                 yStart = keyTop;
                 yEnd = blackKeyBottom;
-                currentColor = BLACK_PAINT;
+                currentColor = BLACK_KEY_PAINT;
                 //Don't increment starting position for next key because this key is black
 
                 //draw key and store reference to it
