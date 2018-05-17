@@ -17,15 +17,18 @@ import java.util.Set;
 
 public class GuitarView extends View implements CandidateNotesListener {
 
-    private final int FRETBOARD_COLOR = Color.GRAY;
-    private final int FRET_COLOR = Color.BLACK;
-    private final int STRING_COLOR = Color.DKGRAY;
-    private final int ROOT_COLOR = 0xFF4444;
-    private final int STRONG_COLOR = 0x5194FF;
+    private static final int FRETBOARD_COLOR = Color.GRAY;
+    private static final int FRET_COLOR = Color.BLACK;
+    private static final int STRING_COLOR = Color.DKGRAY;
+    private static final int ROOT_COLOR = 0xFF4444;
+    private static final int STRONG_COLOR = 0x5194FF;
+    private static final int UPCOMING_ROOT_COLOR = 0x882222;
+    private static final int UPCOMING_STRONG_COLOR = 0x264688;
     // C=0, C#=1, D=2, D#=3, E=4, F=5, F#=6, G=7, G#=8, A=9, A#=10, B=11, C=12
-    private final int[] STRING_START_INDICES = new int[]{4, 9, 2, 7, 11, 4}; //EADGBE
-    private final float NOTE_MARKER_RADIUS = 16f;
+    private static final int[] STRING_START_INDICES = new int[]{4, 9, 2, 7, 11, 4}; //EADGBE
+    private static final float NOTE_MARKER_RADIUS = 16f;
     private NoteFit[][] notes;
+    private NoteFit[][] upcomingNotes;
 
     public GuitarView(Context context) {
         super(context);
@@ -45,7 +48,18 @@ public class GuitarView extends View implements CandidateNotesListener {
 
     @Override
     public void onCandidateNotesChange(Set<CandidateNote> candidateNotes) {
-        notes = new NoteFit[23][6];
+        notes = candidatesToFit(candidateNotes);
+        invalidate();
+    }
+
+    @Override
+    public void onUpcomingCandidateNotesChange(Set<CandidateNote> candidateNotes) {
+        upcomingNotes = candidatesToFit(candidateNotes);
+        invalidate();
+    }
+
+    private NoteFit[][] candidatesToFit(Set<CandidateNote> candidateNotes) {
+        NoteFit[][] fits = new NoteFit[23][6];
         for (CandidateNote candidateNote : candidateNotes) {
             int toneValue = candidateNote.getBaseToneValue();
             for (int stringIndex = 0; stringIndex < 6; stringIndex++) {
@@ -56,17 +70,12 @@ public class GuitarView extends View implements CandidateNotesListener {
                 }
                 int currentMatch = firstMatchingPitch;
                 while (currentMatch < 23) {
-                    notes[currentMatch][stringIndex] = candidateNote.getFit();
+                    fits[currentMatch][stringIndex] = candidateNote.getFit();
                     currentMatch += 12;
                 }
             }
         }
-        invalidate();
-    }
-
-    @Override
-    public void onUpcomingCandidateNotesChange(Set<CandidateNote> candidateNotes) {
-
+        return fits;
     }
 
     @Override
@@ -142,16 +151,19 @@ public class GuitarView extends View implements CandidateNotesListener {
     }
 
     private void drawNotes(float fretWidth, float fretHeight, Canvas canvas) {
-        if (notes == null) return;
         Paint rootPaint = createPaint(ROOT_COLOR);
         Paint strongPaint = createPaint(STRONG_COLOR);
+        Paint upcomingRootPaint = createPaint(UPCOMING_ROOT_COLOR);
+        upcomingRootPaint.setAlpha(127);
+        Paint upcomingStrongPaint = createPaint(UPCOMING_STRONG_COLOR);
+        upcomingStrongPaint.setAlpha(127);
         Paint outlinePaint = createPaint(Color.BLACK);
         outlinePaint.setStyle(Paint.Style.STROKE);
         outlinePaint.setStrokeWidth(3);
 
         for (int stringIndex = 0; stringIndex < 6; stringIndex++) {
             for (int fretIndex = 0; fretIndex < 23; fretIndex++) {
-                if (notes[fretIndex][stringIndex] != null) {
+                if (hasFit(stringIndex, fretIndex, notes)) {
                     NoteFit noteFit = notes[fretIndex][stringIndex];
                     // Outline notes
                     canvas.drawCircle(getX(fretIndex, fretWidth), getY(stringIndex, fretHeight), NOTE_MARKER_RADIUS, outlinePaint);
@@ -159,9 +171,24 @@ public class GuitarView extends View implements CandidateNotesListener {
                     Paint paint = noteFit == NoteFit.ROOT ? rootPaint : strongPaint;
                     paint.setStyle(Paint.Style.FILL);
                     canvas.drawCircle(getX(fretIndex, fretWidth), getY(stringIndex, fretHeight), NOTE_MARKER_RADIUS, paint);
+                } else if (hasFit(stringIndex, fretIndex, upcomingNotes)) {
+                    NoteFit noteFit = upcomingNotes[fretIndex][stringIndex];
+                    // Outline notes
+                    //canvas.drawCircle(getX(fretIndex, fretWidth), getY(stringIndex, fretHeight), NOTE_MARKER_RADIUS, outlinePaint);
+                    // Fill notes
+                    Paint paint = noteFit == NoteFit.ROOT ? upcomingRootPaint : upcomingStrongPaint;
+                    paint.setStyle(Paint.Style.FILL);
+                    canvas.drawCircle(getX(fretIndex, fretWidth), getY(stringIndex, fretHeight), NOTE_MARKER_RADIUS, paint);
                 }
             }
         }
+    }
+
+    private boolean hasFit(int stringIndex, int fretIndex, NoteFit[][] noteFits) {
+        return noteFits != null
+                && noteFits.length > fretIndex
+                && noteFits[fretIndex].length > stringIndex
+                && noteFits[fretIndex][stringIndex] != null;
     }
 
     private Paint createPaint(int colorVal) {
