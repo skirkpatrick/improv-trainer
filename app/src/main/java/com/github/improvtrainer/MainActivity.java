@@ -109,14 +109,24 @@ public class MainActivity extends AppCompatActivity {
         songDisplay.addChordChangeEventListeners(new ChordChangeEventListener() {
             @Override
             public void onChordChange(Chord chord) {
-                String text;
-                if (chord != null) {
-                    text = chord.getRoot().toString() + chord.getQuality().getDisplayName();
-                } else {
-                    text = "";
-                }
+                String text = chordText(chord);
                 chordDisplayPiano.setText(text);
                 chordDisplayGuitar.setText(text);
+            }
+
+            @Override
+            public void onUpcomingChordChange(Chord chord) {
+                String text = chordText(chord);
+                chordUpcomingDisplayPiano.setText(text);
+                chordUpcomingDisplayGuitar.setText(text);
+            }
+
+            private String chordText(Chord chord) {
+                if (chord != null) {
+                    return chord.getRoot().toString() + chord.getQuality().getDisplayName();
+                } else {
+                    return "";
+                }
             }
         });
     }

@@ -6,4 +6,6 @@ public interface ChordChangeEventListener {
 
     void onChordChange(Chord chord);
 
+    void onUpcomingChordChange(Chord chord);
+
 }

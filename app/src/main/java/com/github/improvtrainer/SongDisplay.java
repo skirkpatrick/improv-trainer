@@ -50,6 +50,7 @@ public class SongDisplay implements BeatEventListener {
                 Set<CandidateNote> candidateNotes = candidateNoteService.getCandidates(nextBeat.getChord());
                 updateCandidateNotes(candidateNotes);
                 updateChord(nextBeat.getChord());
+                updateUpcomingChord(null);
             } else if (nextBeat.getBeatType() == BeatType.CLEAR) {
                 updateCandidateNotes(new HashSet<CandidateNote>());
                 updateChord(null);
@@ -61,6 +62,7 @@ public class SongDisplay implements BeatEventListener {
                 if (upcomingBeat.getBeatType() == BeatType.CHORD) {
                     Set<CandidateNote> candidateNotes = candidateNoteService.getCandidates(upcomingBeat.getChord());
                     updateUpcomingCandidateNotes(candidateNotes);
+                    updateUpcomingChord(upcomingBeat.getChord());
                 }
             }
             return true;
@@ -87,9 +89,16 @@ public class SongDisplay implements BeatEventListener {
         }
     }
 
+    private void updateUpcomingChord(final Chord chord) {
+        for (ChordChangeEventListener listener : chordChangeEventListeners) {
+            listener.onUpcomingChordChange(chord);
+        }
+    }
+
     public void clearChordsAndCandidateNotes() {
         updateCandidateNotes(new HashSet<CandidateNote>());
         updateChord(null);
+        updateUpcomingChord(null);
         songIterator = new SongIterator(song);
     }
 
