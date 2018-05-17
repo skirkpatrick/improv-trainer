@@ -80,7 +80,9 @@
         android:text="140"
         app:layout_constraintBottom_toBottomOf="@+id/button_play"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/button_play" />
+        app:layout_constraintTop_toTopOf="@+id/button_play"
+        android:backgroundTint="@android:color/white"
+        android:textCursorDrawable="@null" />
 
     <TextView
         android:id="@+id/display_chord_piano"
