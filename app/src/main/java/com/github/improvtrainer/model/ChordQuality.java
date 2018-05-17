@@ -29,11 +29,11 @@ public enum ChordQuality {
     MAJ_MIN7(new int[]{}, new int[]{}, ""),
     MAJ_MIN9(new int[]{}, new int[]{}, ""),
     
-    SIX_NINE(new int[]{4, 7, 9, 2}, new int[]{}, ""),
+    SIX_NINE(new int[]{4, 7, 9, 2}, new int[]{}, "69"),
     DOM7(new int[]{4, 7, 10}, new int[]{}, "7"),
     SEVEN_SUS4(new int[]{5, 7, 10}, new int[]{}, ""),
     SEVEN_FLAT5(new int[]{4, 6, 10}, new int[]{}, ""),
-    SEVEN_SHARP5(new int[]{4, 8, 10}, new int[]{}, ""),
+    SEVEN_SHARP5(new int[]{4, 8, 10}, new int[]{}, "7#5"),
     SEVEN_SHARP5_FLAT9(new int[]{}, new int[]{}, ""),
     SEVEN_FLAT9(new int[]{4, 7, 10, 1}, new int[]{}, ""),
     SEVEN_SHARP9(new int[]{4, 7, 10, 3}, new int[]{}, ""),
@@ -86,6 +86,10 @@ public enum ChordQuality {
                 return MIN;
             case "dim":
                 return DIM;
+            case "69":
+                return SIX_NINE;
+            case "7#5":
+                return SEVEN_SHARP5;
             default:
                 return MAJ;
         }
