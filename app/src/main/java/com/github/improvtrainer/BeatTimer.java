@@ -21,7 +21,7 @@ public class BeatTimer {
     private State state = State.STOPPED;
     private long nextBeat = 0L;
     /** Used only for pause */
-    private long timeToNextBeat = 0L;
+    private long pausedTimeToNextBeat = 0L;
 
     public BeatTimer(int bpm, BeatEventListener... listeners) {
         this(bpm, null, listeners);
@@ -37,36 +37,34 @@ public class BeatTimer {
 
     public void start() {
         if (state != State.STARTED) {
-            if (backingTrack != null) {
-                long currentPosition = backingTrack.currentPosition();
-                timeToNextBeat = state == State.STOPPED ? 0 : currentPosition % handlerDelay;
+            nextBeat = SystemClock.uptimeMillis() + pausedTimeToNextBeat;
+            pausedTimeToNextBeat = 0L;
+            if (state == State.STOPPED) {
+                handler.post(runner);
+            } else {
+                handler.postAtTime(runner, nextBeat);
             }
-            queueNextBeat();
             state = State.STARTED;
         }
     }
 
     public void pause() {
         if (state == State.STARTED) {
-            if (timeToNextBeat == 0L) {
-                handler.removeCallbacks(runner);
-                timeToNextBeat = nextBeat - SystemClock.uptimeMillis();
-                nextBeat = 0L;
-            }
+            handler.removeCallbacks(runner);
+            pausedTimeToNextBeat = nextBeat - SystemClock.uptimeMillis();
             state = State.PAUSED;
         }
     }
 
     public void stop() {
         handler.removeCallbacks(runner);
-        timeToNextBeat = 0L;
+        pausedTimeToNextBeat = 0L;
         nextBeat = 0L;
         state = State.STOPPED;
     }
 
     private void queueNextBeat() {
-        nextBeat = SystemClock.uptimeMillis() + (timeToNextBeat == 0L ? handlerDelay : timeToNextBeat);
-        timeToNextBeat = 0L;
+        nextBeat = nextBeat + handlerDelay;
         handler.postAtTime(runner, nextBeat);
     }
 
