@@ -87,6 +87,12 @@ public class SongDisplay implements BeatEventListener {
         }
     }
 
+    public void clearChordsAndCandidateNotes() {
+        updateCandidateNotes(new HashSet<CandidateNote>());
+        updateChord(null);
+        songIterator = new SongIterator(song);
+    }
+
     class SongIterator implements Iterator<Beat> {
         private Song song;
         private Iterator<Measure> measureIterator;
