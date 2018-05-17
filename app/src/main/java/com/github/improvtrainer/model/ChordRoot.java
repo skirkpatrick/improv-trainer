@@ -52,6 +52,6 @@ public class ChordRoot {
 
     @Override
     public String toString() {
-        return base.name() + modifier.getStringNotation();
+        return base.name() + modifier.getDisplayName();
     }
 }
