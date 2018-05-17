@@ -19,11 +19,11 @@ public class GuitarView extends View implements CandidateNotesListener {
     private final int FRETBOARD_COLOR = Color.GRAY;
     private final int FRET_COLOR = Color.BLACK;
     private final int STRING_COLOR = Color.DKGRAY;
-    private final int ROOT_COLOR = 0x24BB14;
-    private final int STRONG_COLOR = 0xF7DD00;
+    private final int ROOT_COLOR = 0xFF4444;
+    private final int STRONG_COLOR = 0x5194FF;
     // C=0, C#=1, D=2, D#=3, E=4, F=5, F#=6, G=7, G#=8, A=9, A#=10, B=11, C=12
     private final int[] STRING_START_INDICES = new int[]{4, 9, 2, 7, 11, 4}; //EADGBE
-    private final float NOTE_MARKER_RADIUS = 14f;
+    private final float NOTE_MARKER_RADIUS = 16f;
     private NoteFit[][] notes;
 
     public GuitarView(Context context) {
@@ -138,11 +138,19 @@ public class GuitarView extends View implements CandidateNotesListener {
         if (notes == null) return;
         Paint rootPaint = createPaint(ROOT_COLOR);
         Paint strongPaint = createPaint(STRONG_COLOR);
+        Paint outlinePaint = createPaint(Color.BLACK);
+        outlinePaint.setStyle(Paint.Style.STROKE);
+        outlinePaint.setStrokeWidth(3);
+
         for (int stringIndex = 0; stringIndex < 6; stringIndex++) {
             for (int fretIndex = 0; fretIndex < 23; fretIndex++) {
                 if (notes[fretIndex][stringIndex] != null) {
                     NoteFit noteFit = notes[fretIndex][stringIndex];
+                    // Outline notes
+                    canvas.drawCircle(getX(fretIndex, fretWidth), getY(stringIndex, fretHeight), NOTE_MARKER_RADIUS, outlinePaint);
+                    // Fill notes
                     Paint paint = noteFit == NoteFit.ROOT ? rootPaint : strongPaint;
+                    paint.setStyle(Paint.Style.FILL);
                     canvas.drawCircle(getX(fretIndex, fretWidth), getY(stringIndex, fretHeight), NOTE_MARKER_RADIUS, paint);
                 }
             }
@@ -150,7 +158,7 @@ public class GuitarView extends View implements CandidateNotesListener {
     }
 
     private Paint createPaint(int colorVal) {
-        Paint paint = new Paint();
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(colorVal);
         paint.setAlpha(255);
         return paint;
