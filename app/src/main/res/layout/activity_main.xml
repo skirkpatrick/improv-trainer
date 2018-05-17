@@ -97,6 +97,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/display_upcoming_chord_piano"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text=""
+        android:textSize="18sp"
+        android:textColor="@color/colorHint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/display_chord_piano"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.github.improvtrainer.ui.PianoView
         android:id="@+id/view_piano"
         android:layout_width="460dp"
@@ -147,6 +162,22 @@
         app:layout_constraintBottom_toTopOf="@+id/view_guitar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_piano" />
+
+    <TextView
+        android:id="@+id/display_upcoming_chord_guitar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text=""
+        android:textSize="18sp"
+        android:textColor="@color/colorHint"
+        app:layout_constraintStart_toEndOf="@+id/display_chord_guitar"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintBottom_toTopOf="@+id/view_guitar"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_piano" />
 
 </android.support.constraint.ConstraintLayout>
