@@ -139,12 +139,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeTimer(int bpm, boolean enableMetronome) {
-        if (enableMetronome) {
-            Metronome metronome = new Metronome(this, metronomeView);
-            this.beatTimer = new BeatTimer(bpm, metronome, songDisplay);
-        } else {
-            this.beatTimer = new BeatTimer(bpm, songDisplay);
-        }
+        Metronome metronome = new Metronome(this, metronomeView, enableMetronome);
+        this.beatTimer = new BeatTimer(bpm, metronome, songDisplay);
     }
 
     private boolean timerNeedsInitializing() {
