@@ -1,11 +1,11 @@
 package com.github.improvtrainer;
 
 import com.github.improvtrainer.event.BeatEventListener;
+import com.github.improvtrainer.event.CandidateNotesListener;
 import com.github.improvtrainer.event.ChordChangeEventListener;
 import com.github.improvtrainer.model.Beat;
 import com.github.improvtrainer.model.BeatType;
 import com.github.improvtrainer.model.CandidateNote;
-import com.github.improvtrainer.event.CandidateNotesListener;
 import com.github.improvtrainer.model.Chord;
 import com.github.improvtrainer.model.Measure;
 import com.github.improvtrainer.model.Song;
@@ -97,6 +97,7 @@ public class SongDisplay implements BeatEventListener {
 
     public void clearChordsAndCandidateNotes() {
         updateCandidateNotes(new HashSet<CandidateNote>());
+        updateUpcomingCandidateNotes(new HashSet<CandidateNote>());
         updateChord(null);
         updateUpcomingChord(null);
         songIterator = new SongIterator(song);

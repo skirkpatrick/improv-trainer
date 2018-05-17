@@ -27,11 +27,17 @@ public class PianoView extends View implements CandidateNotesListener {
     private static final Paint BLACK_KEY_ROOT_HIGHLIGHT_PAINT = new Paint(Paint.ANTI_ALIAS_FLAG);
     private static final Paint WHITE_KEY_STRONG_HIGHLIGHT_PAINT = new Paint(Paint.ANTI_ALIAS_FLAG);
     private static final Paint BLACK_KEY_STRONG_HIGHLIGHT_PAINT = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private static final Paint WHITE_KEY_UPCOMING_ROOT_HIGHLIGHT_PAINT = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private static final Paint BLACK_KEY_UPCOMING_ROOT_HIGHLIGHT_PAINT = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private static final Paint WHITE_KEY_UPCOMING_STRONG_HIGHLIGHT_PAINT = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private static final Paint BLACK_KEY_UPCOMING_STRONG_HIGHLIGHT_PAINT = new Paint(Paint.ANTI_ALIAS_FLAG);
     private static final Paint BORDER_PAINT = new Paint(Paint.ANTI_ALIAS_FLAG);
     private static final Set<Integer> BLACK_KEY_OFFSETS = new HashSet<>(Arrays.asList(1, 3, 6, 8, 10));
 
     private Set<Integer> rootNoteNumbers = new HashSet<>();
     private Set<Integer> strongNoteNumbers = new HashSet<>();
+    private Set<Integer> upcomingRootNoteNumbers = new HashSet<>();
+    private Set<Integer> upcomingStrongNoteNumbers = new HashSet<>();
 
     public PianoView(Context context) {
         super(context);
@@ -62,8 +68,14 @@ public class PianoView extends View implements CandidateNotesListener {
         WHITE_KEY_ROOT_HIGHLIGHT_PAINT.setColor(0xFF4444); // todo change this
         WHITE_KEY_ROOT_HIGHLIGHT_PAINT.setAlpha(255);
 
+        WHITE_KEY_UPCOMING_ROOT_HIGHLIGHT_PAINT.setColor(0xFFA2A2);
+        WHITE_KEY_UPCOMING_ROOT_HIGHLIGHT_PAINT.setAlpha(127);
+
         WHITE_KEY_STRONG_HIGHLIGHT_PAINT.setColor(0x5194FF); // todo change this
         WHITE_KEY_STRONG_HIGHLIGHT_PAINT.setAlpha(255);
+
+        WHITE_KEY_UPCOMING_STRONG_HIGHLIGHT_PAINT.setColor(0x8EBAFF);
+        WHITE_KEY_UPCOMING_STRONG_HIGHLIGHT_PAINT.setAlpha(127);
 
         BLACK_KEY_PAINT.setColor(0x000000);
         BLACK_KEY_PAINT.setAlpha(255);
@@ -71,8 +83,14 @@ public class PianoView extends View implements CandidateNotesListener {
         BLACK_KEY_ROOT_HIGHLIGHT_PAINT.setColor(0xFF4444); // todo change this
         BLACK_KEY_ROOT_HIGHLIGHT_PAINT.setAlpha(255);
 
+        BLACK_KEY_UPCOMING_ROOT_HIGHLIGHT_PAINT.setColor(0xFFA2A2);
+        BLACK_KEY_UPCOMING_ROOT_HIGHLIGHT_PAINT.setAlpha(127);
+
         BLACK_KEY_STRONG_HIGHLIGHT_PAINT.setColor(0x5194FF); // todo change this
         BLACK_KEY_STRONG_HIGHLIGHT_PAINT.setAlpha(255);
+
+        BLACK_KEY_UPCOMING_STRONG_HIGHLIGHT_PAINT.setColor(0x8EBAFF);
+        BLACK_KEY_UPCOMING_STRONG_HIGHLIGHT_PAINT.setAlpha(127);
 
         BORDER_PAINT.setColor(0x333333);
         BORDER_PAINT.setAlpha(255);
@@ -104,10 +122,13 @@ public class PianoView extends View implements CandidateNotesListener {
                 yStart = keyTop;
                 yEnd = whiteKeyBottom;
                 currentXStart += whiteKeyWidth; //Increment starting position for next key because this key is white
+                boolean alreadyFilled = false;
                 if (rootNoteNumbers.contains(i % 12)) {
                     currentColor = WHITE_KEY_ROOT_HIGHLIGHT_PAINT;
+                    alreadyFilled = true;
                 } else if (strongNoteNumbers.contains(i % 12)) {
                     currentColor = WHITE_KEY_STRONG_HIGHLIGHT_PAINT;
+                    alreadyFilled = true;
                 } else {
                     currentColor = WHITE_KEY_PAINT;
                 }
@@ -115,6 +136,14 @@ public class PianoView extends View implements CandidateNotesListener {
                 //draw key and store reference to it
                 canvas.drawRect(xStart, yStart, xEnd, yEnd, currentColor);
                 canvas.drawRect(xStart, yStart, xEnd, yEnd, BORDER_PAINT);
+
+                if (!alreadyFilled) {
+                    if (upcomingRootNoteNumbers.contains(i % 12)) {
+                        canvas.drawRect(xStart, yStart, xEnd, yEnd, WHITE_KEY_UPCOMING_ROOT_HIGHLIGHT_PAINT);
+                    } else if (upcomingStrongNoteNumbers.contains(i % 12)) {
+                        canvas.drawRect(xStart, yStart, xEnd, yEnd, WHITE_KEY_UPCOMING_STRONG_HIGHLIGHT_PAINT);
+                    }
+                }
             }
 
         }
@@ -128,10 +157,13 @@ public class PianoView extends View implements CandidateNotesListener {
                 xEnd = currentXStart + blackKeyWidth / 2;
                 yStart = keyTop;
                 yEnd = blackKeyBottom;
+                boolean alreadyFilled = false;
                 if (rootNoteNumbers.contains(i % 12)) {
                     currentColor = BLACK_KEY_ROOT_HIGHLIGHT_PAINT;
+                    alreadyFilled = true;
                 } else if (strongNoteNumbers.contains(i % 12)) {
                     currentColor = BLACK_KEY_STRONG_HIGHLIGHT_PAINT;
+                    alreadyFilled = true;
                 } else {
                     currentColor = BLACK_KEY_PAINT;
                 }
@@ -140,6 +172,14 @@ public class PianoView extends View implements CandidateNotesListener {
                 //draw key and store reference to it
                 canvas.drawRect(xStart, yStart, xEnd, yEnd, currentColor);
                 canvas.drawRect(xStart, yStart, xEnd, yEnd, BORDER_PAINT);
+
+                if (!alreadyFilled) {
+                    if (upcomingRootNoteNumbers.contains(i % 12)) {
+                        canvas.drawRect(xStart, yStart, xEnd, yEnd, BLACK_KEY_UPCOMING_ROOT_HIGHLIGHT_PAINT);
+                    } else if (upcomingStrongNoteNumbers.contains(i % 12)) {
+                        canvas.drawRect(xStart, yStart, xEnd, yEnd, BLACK_KEY_UPCOMING_STRONG_HIGHLIGHT_PAINT);
+                    }
+                }
             } else {
                 currentXStart += whiteKeyWidth;
             }
@@ -166,6 +206,15 @@ public class PianoView extends View implements CandidateNotesListener {
 
     @Override
     public void onUpcomingCandidateNotesChange(Set<CandidateNote> candidateNotes) {
-
+        upcomingRootNoteNumbers = new HashSet<>();
+        upcomingStrongNoteNumbers = new HashSet<>();
+        for (CandidateNote candidateNote : candidateNotes) {
+            if (candidateNote.getFit() == NoteFit.ROOT) {
+                upcomingRootNoteNumbers.add(candidateNote.getBaseToneValue());
+            } else if (candidateNote.getFit() == NoteFit.STRONG) {
+                upcomingStrongNoteNumbers.add(candidateNote.getBaseToneValue());
+            }
+        }
+        this.invalidate();
     }
 }
