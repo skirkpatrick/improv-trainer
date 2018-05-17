@@ -134,10 +134,11 @@ public class GuitarView extends View implements CandidateNotesListener {
         canvas.drawCircle(fretWidth * 12.5f, fretHeight * 2f, 8, fretPaint);
         canvas.drawCircle(fretWidth * 12.5f, fretHeight * 4f, 8, fretPaint);
 
-        // Fret 15, 17, 19
+        // Fret 15, 17, 19, 21
         canvas.drawCircle(fretWidth * 15.5f, fretHeight * 3f, 8, fretPaint);
         canvas.drawCircle(fretWidth * 17.5f, fretHeight * 3f, 8, fretPaint);
         canvas.drawCircle(fretWidth * 19.5f, fretHeight * 3f, 8, fretPaint);
+        canvas.drawCircle(fretWidth * 21.5f, fretHeight * 3f, 8, fretPaint);
     }
 
     private void drawNotes(float fretWidth, float fretHeight, Canvas canvas) {
