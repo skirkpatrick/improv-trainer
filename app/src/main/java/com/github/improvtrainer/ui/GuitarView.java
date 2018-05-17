@@ -19,10 +19,11 @@ public class GuitarView extends View implements CandidateNotesListener {
     private final int FRETBOARD_COLOR = Color.GRAY;
     private final int FRET_COLOR = Color.BLACK;
     private final int STRING_COLOR = Color.DKGRAY;
-    private final int ROOT_COLOR = 0x00FF00;
-    private final int STRONG_COLOR = 0xFFFF00;
+    private final int ROOT_COLOR = 0x24BB14;
+    private final int STRONG_COLOR = 0xF7DD00;
     // C=0, C#=1, D=2, D#=3, E=4, F=5, F#=6, G=7, G#=8, A=9, A#=10, B=11, C=12
     private final int[] STRING_START_INDICES = new int[]{4, 9, 2, 7, 11, 4}; //EADGBE
+    private final float NOTE_MARKER_RADIUS = 14f;
     private NoteFit[][] notes;
 
     public GuitarView(Context context) {
@@ -142,7 +143,7 @@ public class GuitarView extends View implements CandidateNotesListener {
                 if (notes[fretIndex][stringIndex] != null) {
                     NoteFit noteFit = notes[fretIndex][stringIndex];
                     Paint paint = noteFit == NoteFit.ROOT ? rootPaint : strongPaint;
-                    canvas.drawCircle(getX(fretIndex, fretWidth), getY(stringIndex, fretHeight), 10, paint);
+                    canvas.drawCircle(getX(fretIndex, fretWidth), getY(stringIndex, fretHeight), NOTE_MARKER_RADIUS, paint);
                 }
             }
         }

@@ -59,19 +59,19 @@ public class PianoView extends View implements CandidateNotesListener {
         WHITE_KEY_PAINT.setColor(0xFFFFFF);
         WHITE_KEY_PAINT.setAlpha(255);
 
-        WHITE_KEY_ROOT_HIGHLIGHT_PAINT.setColor(0x00FF00); // todo change this
+        WHITE_KEY_ROOT_HIGHLIGHT_PAINT.setColor(0x24BB14); // todo change this
         WHITE_KEY_ROOT_HIGHLIGHT_PAINT.setAlpha(255);
 
-        WHITE_KEY_STRONG_HIGHLIGHT_PAINT.setColor(0xFFFF00); // todo change this
+        WHITE_KEY_STRONG_HIGHLIGHT_PAINT.setColor(0xF7DD00); // todo change this
         WHITE_KEY_STRONG_HIGHLIGHT_PAINT.setAlpha(255);
 
         BLACK_KEY_PAINT.setColor(0x000000);
         BLACK_KEY_PAINT.setAlpha(255);
 
-        BLACK_KEY_ROOT_HIGHLIGHT_PAINT.setColor(0x00FF00); // todo change this
+        BLACK_KEY_ROOT_HIGHLIGHT_PAINT.setColor(0x24BB14); // todo change this
         BLACK_KEY_ROOT_HIGHLIGHT_PAINT.setAlpha(255);
 
-        BLACK_KEY_STRONG_HIGHLIGHT_PAINT.setColor(0xFFFF00); // todo change this
+        BLACK_KEY_STRONG_HIGHLIGHT_PAINT.setColor(0xF7DD00); // todo change this
         BLACK_KEY_STRONG_HIGHLIGHT_PAINT.setAlpha(255);
 
         BORDER_PAINT.setColor(0x999999);
