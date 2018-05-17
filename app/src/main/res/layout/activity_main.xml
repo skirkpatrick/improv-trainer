@@ -120,5 +120,18 @@
         app:layout_constraintTop_toBottomOf="@+id/view_piano"
         app:layout_constraintVertical_bias="0.866" />
 
+    <com.github.improvtrainer.ui.MetronomeView
+        android:id="@+id/view_metronome"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="24dp"
+        android:padding="0dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@+id/display_chord"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
