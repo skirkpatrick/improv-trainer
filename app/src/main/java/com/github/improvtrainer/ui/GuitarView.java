@@ -16,7 +16,6 @@ import java.util.Set;
 
 public class GuitarView extends View implements CandidateNotesListener {
 
-    private final int BACKGROUND_COLOR = Color.WHITE;
     private final int FRETBOARD_COLOR = Color.GRAY;
     private final int FRET_COLOR = Color.BLACK;
     private final int STRING_COLOR = Color.DKGRAY;
@@ -41,7 +40,6 @@ public class GuitarView extends View implements CandidateNotesListener {
     public GuitarView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
-
 
     @Override
     public void onCandidateNotesChange(Set<CandidateNote> candidateNotes) {
@@ -82,17 +80,10 @@ public class GuitarView extends View implements CandidateNotesListener {
     }
 
     private void drawStaticImage(float viewWidth, float viewHeight, float fretWidth, float fretHeight, float padHeight, Canvas canvas) {
-        //drawBackground(viewWidth, viewHeight, canvas);
         drawFretboard(viewWidth, viewHeight, fretWidth, padHeight, canvas);
         drawFrets(viewHeight, fretWidth, padHeight, canvas);
         drawStrings(viewWidth, fretWidth, fretHeight, padHeight, canvas);
         drawFretMarkers(viewHeight, fretWidth, fretHeight, canvas);
-    }
-
-    private void drawBackground(float viewWidth, float viewHeight, Canvas canvas) {
-        Paint background = new Paint();
-        background.setColor(BACKGROUND_COLOR);
-        canvas.drawRect(0, 0, viewWidth, viewHeight, background);
     }
 
     private void drawFretboard(float viewWidth, float viewHeight, float fretWidth, float padHeight, Canvas canvas) {
@@ -144,18 +135,24 @@ public class GuitarView extends View implements CandidateNotesListener {
 
     private void drawNotes(float fretWidth, float fretHeight, Canvas canvas) {
         if (notes == null) return;
+        Paint rootPaint = createPaint(ROOT_COLOR);
+        Paint strongPaint = createPaint(STRONG_COLOR);
         for (int stringIndex = 0; stringIndex < 6; stringIndex++) {
             for (int fretIndex = 0; fretIndex < 23; fretIndex++) {
                 if (notes[fretIndex][stringIndex] != null) {
                     NoteFit noteFit = notes[fretIndex][stringIndex];
-                    int colorVal = noteFit == NoteFit.ROOT ? ROOT_COLOR : STRONG_COLOR;
-                    Paint paint = new Paint(); //refactor out
-                    paint.setColor(colorVal);
-                    paint.setAlpha(255);
+                    Paint paint = noteFit == NoteFit.ROOT ? rootPaint : strongPaint;
                     canvas.drawCircle(getX(fretIndex, fretWidth), getY(stringIndex, fretHeight), 10, paint);
                 }
             }
         }
+    }
+
+    private Paint createPaint(int colorVal) {
+        Paint paint = new Paint();
+        paint.setColor(colorVal);
+        paint.setAlpha(255);
+        return paint;
     }
 
     private float getX(int fretIndex, float fretWidth) {
