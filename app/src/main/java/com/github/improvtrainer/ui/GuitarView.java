@@ -20,8 +20,10 @@ public class GuitarView extends View implements CandidateNotesListener {
     private final int FRETBOARD_COLOR = Color.GRAY;
     private final int FRET_COLOR = Color.BLACK;
     private final int STRING_COLOR = Color.DKGRAY;
-    private final int ROOT_COLOR = Color.RED;
-    private final int STRONG_COLOR = Color.MAGENTA;
+    private final int ROOT_COLOR = 0x00FF00;
+    private final int STRONG_COLOR = 0xFFFF00;
+    // C=0, C#=1, D=2, D#=3, E=4, F=5, F#=6, G=7, G#=8, A=9, A#=10, B=11, C=12
+    private final int[] STRING_START_INDICES = new int[]{4, 9, 2, 7, 11, 4}; //EADGBE
     private NoteFit[][] notes;
 
     public GuitarView(Context context) {
@@ -44,7 +46,21 @@ public class GuitarView extends View implements CandidateNotesListener {
     @Override
     public void onCandidateNotesChange(Set<CandidateNote> candidateNotes) {
         notes = new NoteFit[23][6];
-        // TODO map candidateNotes to NoteFit[][] notes
+        for (CandidateNote candidateNote : candidateNotes) {
+            int toneValue = candidateNote.getBaseToneValue();
+            for (int stringIndex = 0; stringIndex < 6; stringIndex++) {
+                int stringStartingPitch = STRING_START_INDICES[stringIndex];
+                int firstMatchingPitch = toneValue - stringStartingPitch;
+                if (firstMatchingPitch < 0) {
+                    firstMatchingPitch += 12;
+                }
+                int currentMatch = firstMatchingPitch;
+                while (currentMatch < 23) {
+                    notes[currentMatch][stringIndex] = candidateNote.getFit();
+                    currentMatch += 12;
+                }
+            }
+        }
         invalidate();
     }
 
@@ -99,7 +115,7 @@ public class GuitarView extends View implements CandidateNotesListener {
         Paint stringPaint = new Paint();
         stringPaint.setColor(STRING_COLOR);
         float stringHeight = fretHeight;
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             canvas.drawLine(2 * fretWidth, stringHeight, viewWidth - fretWidth, stringHeight, stringPaint);
             stringHeight += fretHeight;
         }
@@ -126,6 +142,26 @@ public class GuitarView extends View implements CandidateNotesListener {
     }
 
     private void drawNotes(float viewWidth, float viewHeight, float fretWidth, float fretHeight, Canvas canvas) {
-        // TODO iterate NoteFit[][] notes and draw circles in the right color
+        if (notes == null) return;
+        for (int stringIndex = 0; stringIndex < 6; stringIndex++) {
+            for (int fretIndex = 0; fretIndex < 23; fretIndex++) {
+                if (notes[fretIndex][stringIndex] != null) {
+                    NoteFit noteFit = notes[fretIndex][stringIndex];
+                    int colorVal = noteFit == NoteFit.ROOT ? ROOT_COLOR : STRONG_COLOR;
+                    Paint paint = new Paint(); //refactor out
+                    paint.setColor(colorVal);
+                    paint.setAlpha(255);
+                    canvas.drawCircle(getX(fretIndex, fretWidth), getY(stringIndex, fretHeight), 10, paint);
+                }
+            }
+        }
+    }
+
+    private float getX(int fretIndex, float fretWidth) {
+        return (1.5f + fretIndex) * fretWidth;
+    }
+
+    private float getY(int stringIndex, float fretHeight) {
+        return fretHeight * (6 - stringIndex);
     }
 }
