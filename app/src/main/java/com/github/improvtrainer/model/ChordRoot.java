@@ -49,4 +49,9 @@ public class ChordRoot {
     public int hashCode() {
         return Objects.hash(base, modifier);
     }
+
+    @Override
+    public String toString() {
+        return base.name() + modifier.getStringNotation();
+    }
 }

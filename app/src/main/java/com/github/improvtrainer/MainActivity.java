@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.improvtrainer.event.ChordChangeEventListener;
+import com.github.improvtrainer.model.Chord;
 import com.github.improvtrainer.model.Song;
 import com.github.improvtrainer.parser.ChordChartParser;
 import com.github.improvtrainer.ui.GuitarView;
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         chordDisplay = findViewById(R.id.display_chord);
         pianoView = findViewById(R.id.view_piano);
         guitarView = findViewById(R.id.view_guitar);
+        chordDisplay = findViewById(R.id.display_chord);
     }
 
     private void addPlaybackButtonListeners() {
@@ -89,7 +92,20 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeTimer(int bpm) {
         Metronome metronome = new Metronome(this);
-        SongDisplay songDisplay = new SongDisplay(song, new CandidateNoteService(), guitarView, pianoView);
+        SongDisplay songDisplay = new SongDisplay(song, new CandidateNoteService());
+        songDisplay.addCandidateNotesListeners(guitarView, pianoView);
+        songDisplay.addChordChangeEventListeners(new ChordChangeEventListener() {
+            @Override
+            public void onChordChange(Chord chord) {
+                String text;
+                if (chord != null) {
+                    text = chord.getRoot().toString() + " " + chord.getQuality().name();
+                } else {
+                    text = "";
+                }
+                chordDisplay.setText(text);
+            }
+        });
         this.beatTimer = new BeatTimer(bpm, metronome, songDisplay);
     }
 

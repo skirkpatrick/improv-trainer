@@ -1,4 +1,6 @@
-package com.github.improvtrainer.model;
+package com.github.improvtrainer.event;
+
+import com.github.improvtrainer.model.CandidateNote;
 
 import java.util.Set;
 

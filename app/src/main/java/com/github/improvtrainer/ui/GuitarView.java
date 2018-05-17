@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.github.improvtrainer.model.CandidateNote;
-import com.github.improvtrainer.model.CandidateNotesListener;
+import com.github.improvtrainer.event.CandidateNotesListener;
 import com.github.improvtrainer.model.NoteFit;
 
 import java.util.Set;
