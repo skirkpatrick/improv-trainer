@@ -31,12 +31,15 @@ public class MainActivity extends AppCompatActivity {
 
     private Song song;
     private BeatTimer beatTimer;
+    private BackingTrackPlayer backingTrackPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+        backingTrackPlayer = new BackingTrackPlayer(this, R.raw.all_of_me_mp3);
 
         findViews();
         parseChordChart();
@@ -114,18 +117,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startTimer() {
+        backingTrackPlayer.start();
         if (beatTimer != null) {
             beatTimer.start();
         }
     }
 
     private void pauseTimer() {
+        backingTrackPlayer.stop();
         if (beatTimer != null) {
             beatTimer.pause();
         }
     }
 
     private void stopTimer() {
+        backingTrackPlayer.stop();
         if (beatTimer != null) {
             beatTimer.stop();
             beatTimer = null; // reset beat timer so that next time around we'll create a new one with a different tempo
