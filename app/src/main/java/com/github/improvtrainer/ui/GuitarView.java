@@ -73,18 +73,19 @@ public class GuitarView extends View implements CandidateNotesListener {
     public void onDraw(Canvas canvas) {
         float viewWidth = (float)getMeasuredWidth();
         float viewHeight = (float)getMeasuredHeight();
-        float fretWidth = viewWidth / 25f;
-        float fretHeight = viewHeight / 7f;
+        float fretWidth = viewWidth / 23f;
+        float fretHeight = viewHeight / 6f;
+        float padHeight = fretHeight / 2;
 
-        drawStaticImage(viewWidth, viewHeight, fretWidth, fretHeight, canvas);
-        drawNotes(viewWidth, viewHeight, fretWidth, fretHeight, canvas);
+        drawStaticImage(viewWidth, viewHeight, fretWidth, fretHeight, padHeight, canvas);
+        drawNotes(fretWidth, fretHeight, canvas);
     }
 
-    private void drawStaticImage(float viewWidth, float viewHeight, float fretWidth, float fretHeight, Canvas canvas) {
-        drawBackground(viewWidth, viewHeight, canvas);
-        drawFretboard(viewWidth, viewHeight, fretWidth, fretHeight, canvas);
-        drawFrets(viewHeight, fretWidth, fretHeight, canvas);
-        drawStrings(viewWidth, viewHeight, fretWidth, fretHeight, canvas);
+    private void drawStaticImage(float viewWidth, float viewHeight, float fretWidth, float fretHeight, float padHeight, Canvas canvas) {
+        //drawBackground(viewWidth, viewHeight, canvas);
+        drawFretboard(viewWidth, viewHeight, fretWidth, padHeight, canvas);
+        drawFrets(viewHeight, fretWidth, padHeight, canvas);
+        drawStrings(viewWidth, fretWidth, fretHeight, padHeight, canvas);
         drawFretMarkers(viewHeight, fretWidth, fretHeight, canvas);
     }
 
@@ -94,29 +95,29 @@ public class GuitarView extends View implements CandidateNotesListener {
         canvas.drawRect(0, 0, viewWidth, viewHeight, background);
     }
 
-    private void drawFretboard(float viewWidth, float viewHeight, float fretWidth, float fretHeight, Canvas canvas) {
+    private void drawFretboard(float viewWidth, float viewHeight, float fretWidth, float padHeight, Canvas canvas) {
         Paint fretBoard = new Paint();
         fretBoard.setColor(FRETBOARD_COLOR);
-        canvas.drawRect(2 * fretWidth, fretHeight, viewWidth - fretWidth, viewHeight - fretHeight, fretBoard);
+        canvas.drawRect(fretWidth, padHeight, viewWidth, viewHeight - padHeight, fretBoard);
     }
 
-    private void drawFrets(float viewHeight, float fretWidth, float fretHeight, Canvas canvas) {
+    private void drawFrets(float viewHeight, float fretWidth, float padHeight, Canvas canvas) {
         Paint fretPaint = new Paint();
         fretPaint.setColor(FRET_COLOR);
-        float fretX = 2 * fretWidth;
+        float fretX = fretWidth;
 
         for (int i = 0; i < 23; i++) {
-            canvas.drawLine(fretX, fretHeight, fretX, viewHeight - fretHeight, fretPaint);
+            canvas.drawLine(fretX, padHeight, fretX, viewHeight - padHeight, fretPaint);
             fretX += fretWidth;
         }
     }
 
-    private void drawStrings(float viewWidth, float viewHeight, float fretWidth, float fretHeight, Canvas canvas) {
+    private void drawStrings(float viewWidth, float fretWidth, float fretHeight, float padHeight, Canvas canvas) {
         Paint stringPaint = new Paint();
         stringPaint.setColor(STRING_COLOR);
-        float stringHeight = fretHeight;
+        float stringHeight = padHeight;
         for (int i = 0; i < 6; i++) {
-            canvas.drawLine(2 * fretWidth, stringHeight, viewWidth - fretWidth, stringHeight, stringPaint);
+            canvas.drawLine(fretWidth , stringHeight, viewWidth, stringHeight, stringPaint);
             stringHeight += fretHeight;
         }
     }
@@ -126,22 +127,22 @@ public class GuitarView extends View implements CandidateNotesListener {
         fretPaint.setColor(STRING_COLOR);
 
         // Frets 3, 5, 7, 9
-        canvas.drawCircle(fretWidth * 4.5f, viewHeight / 2, 8, fretPaint);
-        canvas.drawCircle(fretWidth * 6.5f, viewHeight / 2, 8, fretPaint);
-        canvas.drawCircle(fretWidth * 8.5f, viewHeight / 2, 8, fretPaint);
-        canvas.drawCircle(fretWidth * 10.5f, viewHeight / 2, 8, fretPaint);
+        canvas.drawCircle(fretWidth * 3.5f, viewHeight / 2, 8, fretPaint);
+        canvas.drawCircle(fretWidth * 5.5f, viewHeight / 2, 8, fretPaint);
+        canvas.drawCircle(fretWidth * 7.5f, viewHeight / 2, 8, fretPaint);
+        canvas.drawCircle(fretWidth * 9.5f, viewHeight / 2, 8, fretPaint);
 
         // Fret 12
-        canvas.drawCircle(fretWidth * 13.5f, fretHeight * 2.5f, 8, fretPaint);
-        canvas.drawCircle(fretWidth * 13.5f, fretHeight * 4.5f, 8, fretPaint);
+        canvas.drawCircle(fretWidth * 12.5f, fretHeight * 2f, 8, fretPaint);
+        canvas.drawCircle(fretWidth * 12.5f, fretHeight * 4f, 8, fretPaint);
 
         // Fret 15, 17, 19
-        canvas.drawCircle(fretWidth * 16.5f, viewHeight / 2, 8, fretPaint);
-        canvas.drawCircle(fretWidth * 18.5f, viewHeight / 2, 8, fretPaint);
-        canvas.drawCircle(fretWidth * 20.5f, viewHeight / 2, 8, fretPaint);
+        canvas.drawCircle(fretWidth * 15.5f, viewHeight / 2, 8, fretPaint);
+        canvas.drawCircle(fretWidth * 17.5f, viewHeight / 2, 8, fretPaint);
+        canvas.drawCircle(fretWidth * 19.5f, viewHeight / 2, 8, fretPaint);
     }
 
-    private void drawNotes(float viewWidth, float viewHeight, float fretWidth, float fretHeight, Canvas canvas) {
+    private void drawNotes(float fretWidth, float fretHeight, Canvas canvas) {
         if (notes == null) return;
         for (int stringIndex = 0; stringIndex < 6; stringIndex++) {
             for (int fretIndex = 0; fretIndex < 23; fretIndex++) {
@@ -158,10 +159,10 @@ public class GuitarView extends View implements CandidateNotesListener {
     }
 
     private float getX(int fretIndex, float fretWidth) {
-        return (1.5f + fretIndex) * fretWidth;
+        return (0.5f + fretIndex) * fretWidth;
     }
 
     private float getY(int stringIndex, float fretHeight) {
-        return fretHeight * (6 - stringIndex);
+        return fretHeight * (5.5f - stringIndex);
     }
 }
