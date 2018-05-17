@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private PianoView pianoView;
     private GuitarView guitarView;
     private MetronomeView metronomeView;
+    private CheckBox backingTrackCheckbox;
     private CheckBox metronomeCheckbox;
 
     private Song song;
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         chordUpcomingDisplayGuitar = findViewById(R.id.display_upcoming_chord_guitar);
         metronomeView = findViewById(R.id.view_metronome);
         metronomeCheckbox = findViewById(R.id.metronome_checkbox);
+        backingTrackCheckbox = findViewById(R.id.backing_track_checkbox);
     }
 
     private void addPlaybackButtonListeners() {
@@ -88,7 +90,8 @@ public class MainActivity extends AppCompatActivity {
                         initializeTimer(tempo, enableMetronome);
                     }
                 }
-                startTimer();
+                boolean enableBackingTrack = backingTrackCheckbox.isChecked();
+                startTimer(enableBackingTrack);
             }
         });
 
@@ -148,15 +151,21 @@ public class MainActivity extends AppCompatActivity {
         return beatTimer == null;
     }
 
-    private void startTimer() {
-        backingTrackPlayer.start();
+    private void startTimer(boolean enableBackingTrack) {
+        if (beatTimer != null &&
+                (beatTimer.hasStarted() && backingTrackPlayer.currentPosition() > 0) ||
+                (!beatTimer.hasStarted() && backingTrackPlayer.currentPosition() <= 0) &&
+                enableBackingTrack) {
+            // if both beat timer and backing track player are started, or both not started, then play
+            backingTrackPlayer.start();
+        }
         if (beatTimer != null) {
             beatTimer.start();
         }
     }
 
     private void pauseTimer() {
-        backingTrackPlayer.stop();
+        backingTrackPlayer.pause();
         if (beatTimer != null) {
             beatTimer.pause();
         }

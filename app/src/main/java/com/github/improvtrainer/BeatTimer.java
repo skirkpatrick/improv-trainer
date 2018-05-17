@@ -63,6 +63,10 @@ public class BeatTimer {
         state = State.STOPPED;
     }
 
+    public boolean hasStarted() {
+        return state != State.STOPPED;
+    }
+
     private void queueNextBeat() {
         nextBeat = nextBeat + handlerDelay;
         handler.postAtTime(runner, nextBeat);
