@@ -39,7 +39,7 @@ public class BeatTimer {
         if (state != State.STARTED) {
             if (backingTrack != null) {
                 long currentPosition = backingTrack.currentPosition();
-                timeToNextBeat = currentPosition == 0 ? 0 : currentPosition % handlerDelay;
+                timeToNextBeat = state == State.STOPPED ? 0 : currentPosition % handlerDelay;
             }
             queueNextBeat();
             state = State.STARTED;
