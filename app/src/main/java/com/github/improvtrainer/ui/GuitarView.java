@@ -121,7 +121,7 @@ public class GuitarView extends View implements CandidateNotesListener {
     }
 
     private void drawFretMarkers(float viewHeight, float fretWidth, float fretHeight, Canvas canvas) {
-        Paint fretPaint = new Paint();
+        Paint fretPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         fretPaint.setColor(STRING_COLOR);
 
         // Frets 3, 5, 7, 9
