@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private PianoView pianoView;
     private GuitarView guitarView;
     private MetronomeView metronomeView;
+    private CheckBox metronomeCheckbox;
 
     private Song song;
     private SongDisplay songDisplay;
@@ -65,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         chordDisplayGuitar = findViewById(R.id.display_chord_guitar);
         chordUpcomingDisplayGuitar = findViewById(R.id.display_upcoming_chord_guitar);
         metronomeView = findViewById(R.id.view_metronome);
+        metronomeCheckbox = findViewById(R.id.metronome_checkbox);
     }
 
     private void addPlaybackButtonListeners() {
@@ -81,7 +84,8 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     } else {
                         Integer tempo = Integer.valueOf(tempoString);
-                        initializeTimer(tempo);
+                        boolean enableMetronome = metronomeCheckbox.isChecked();
+                        initializeTimer(tempo, enableMetronome);
                     }
                 }
                 startTimer();
@@ -131,9 +135,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void initializeTimer(int bpm) {
-        Metronome metronome = new Metronome(this, metronomeView);
-        this.beatTimer = new BeatTimer(bpm, metronome, songDisplay);
+    private void initializeTimer(int bpm, boolean enableMetronome) {
+        if (enableMetronome) {
+            Metronome metronome = new Metronome(this, metronomeView);
+            this.beatTimer = new BeatTimer(bpm, metronome, songDisplay);
+        } else {
+            this.beatTimer = new BeatTimer(bpm, songDisplay);
+        }
     }
 
     private boolean timerNeedsInitializing() {
