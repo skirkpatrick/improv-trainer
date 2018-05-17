@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
             public void onChordChange(Chord chord) {
                 String text;
                 if (chord != null) {
-                    text = chord.getRoot().toString() + " " + chord.getQuality().name();
+                    text = chord.getRoot().toString() + chord.getQuality().getDisplayName();
                 } else {
                     text = "";
                 }
