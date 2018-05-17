@@ -15,6 +15,7 @@ import com.github.improvtrainer.model.Chord;
 import com.github.improvtrainer.model.Song;
 import com.github.improvtrainer.parser.ChordChartParser;
 import com.github.improvtrainer.ui.GuitarView;
+import com.github.improvtrainer.ui.MetronomeView;
 import com.github.improvtrainer.ui.PianoView;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView chordDisplay;
     private PianoView pianoView;
     private GuitarView guitarView;
+    private MetronomeView metronomeView;
 
     private Song song;
     private SongDisplay songDisplay;
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         pianoView = findViewById(R.id.view_piano);
         guitarView = findViewById(R.id.view_guitar);
         chordDisplay = findViewById(R.id.display_chord);
+        metronomeView = findViewById(R.id.view_metronome);
     }
 
     private void addPlaybackButtonListeners() {
@@ -113,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeTimer(int bpm) {
-        Metronome metronome = new Metronome(this);
+        Metronome metronome = new Metronome(this, metronomeView);
         this.beatTimer = new BeatTimer(bpm, metronome, songDisplay);
     }
 
