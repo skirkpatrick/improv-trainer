@@ -26,7 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageView buttonPlay;
     private ImageView buttonPause;
     private EditText editTempo;
-    private TextView chordDisplay;
+    private TextView chordDisplayPiano;
+    private TextView chordDisplayGuitar;
     private PianoView pianoView;
     private GuitarView guitarView;
     private MetronomeView metronomeView;
@@ -55,10 +56,10 @@ public class MainActivity extends AppCompatActivity {
         buttonPlay = findViewById(R.id.button_play);
         buttonPause = findViewById(R.id.button_pause);
         editTempo = findViewById(R.id.tempo_edit);
-        chordDisplay = findViewById(R.id.display_chord);
+        chordDisplayPiano = findViewById(R.id.display_chord_piano);
         pianoView = findViewById(R.id.view_piano);
         guitarView = findViewById(R.id.view_guitar);
-        chordDisplay = findViewById(R.id.display_chord);
+        chordDisplayGuitar = findViewById(R.id.display_chord_guitar);
         metronomeView = findViewById(R.id.view_metronome);
     }
 
@@ -110,7 +111,8 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     text = "";
                 }
-                chordDisplay.setText(text);
+                chordDisplayPiano.setText(text);
+                chordDisplayGuitar.setText(text);
             }
         });
     }

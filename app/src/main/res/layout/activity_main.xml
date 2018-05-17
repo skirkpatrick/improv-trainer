@@ -83,7 +83,7 @@
         app:layout_constraintTop_toTopOf="@+id/button_play" />
 
     <TextView
-        android:id="@+id/display_chord"
+        android:id="@+id/display_chord_piano"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -104,7 +104,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/display_chord" />
+        app:layout_constraintTop_toBottomOf="@+id/display_chord_piano" />
 
     <com.github.improvtrainer.ui.GuitarView
         android:id="@+id/view_guitar"
@@ -118,7 +118,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_piano"
         app:layout_constraintVertical_bias="0.866" />
 
     <com.github.improvtrainer.ui.MetronomeView
@@ -130,9 +129,22 @@
         android:layout_marginTop="8dp"
         android:padding="0dp"
         android:visibility="invisible"
-        app:layout_constraintEnd_toStartOf="@+id/display_chord"
+        app:layout_constraintEnd_toStartOf="@+id/display_chord_piano"
         app:layout_constraintHorizontal_bias="0.53"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/display_chord_guitar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Chord"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/view_guitar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_piano" />
 
 </android.support.constraint.ConstraintLayout>
