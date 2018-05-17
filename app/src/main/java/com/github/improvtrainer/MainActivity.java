@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private GuitarView guitarView;
 
     private Song song;
+    private SongDisplay songDisplay;
     private BeatTimer beatTimer;
     private BackingTrackPlayer backingTrackPlayer;
 
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         findViews();
         parseChordChart();
+        initializeSongDisplay();;
         addPlaybackButtonListeners();
     }
 
@@ -93,22 +95,25 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void initializeTimer(int bpm) {
-        Metronome metronome = new Metronome(this);
-        SongDisplay songDisplay = new SongDisplay(song, new CandidateNoteService());
+    private void initializeSongDisplay() {
+        songDisplay = new SongDisplay(song, new CandidateNoteService());
         songDisplay.addCandidateNotesListeners(guitarView, pianoView);
         songDisplay.addChordChangeEventListeners(new ChordChangeEventListener() {
             @Override
             public void onChordChange(Chord chord) {
                 String text;
                 if (chord != null) {
-                    text = chord.getRoot().toString() + " " + chord.getQuality().name();
+                    text = chord.getRoot().toString() + chord.getQuality().getDisplayName();
                 } else {
                     text = "";
                 }
                 chordDisplay.setText(text);
             }
         });
+    }
+
+    private void initializeTimer(int bpm) {
+        Metronome metronome = new Metronome(this);
         this.beatTimer = new BeatTimer(bpm, metronome, songDisplay);
     }
 
@@ -135,6 +140,9 @@ public class MainActivity extends AppCompatActivity {
         if (beatTimer != null) {
             beatTimer.stop();
             beatTimer = null; // reset beat timer so that next time around we'll create a new one with a different tempo
+            if (songDisplay != null) {
+                songDisplay.clearChordsAndCandidateNotes();
+            }
         }
     }
 
